@@ -28,13 +28,17 @@ private:
 
 
   //internal state of the chip
-  int state [][];
+  int state [100][100];
 
 
   //benchmark data of the chip
-  int setup[][];
-  int hold[][];
-  int pw[][];
+  int setup[100][100];
+  int hold[100][100];
+  int pw[100][100];
+
+  //arrays for latch and data pin locations
+  int latchPins[100];
+  int dataPins[100];
 
   };
 

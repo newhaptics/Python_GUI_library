@@ -2,9 +2,35 @@
 #include "FC_mechanics.h"
 
 //input the rows and columns of the chip and record the setup, hold, pw required to make a valid input
-FC_mechanics::FC_mechanics(int rows, int columns, int setup[][], int hold[][], int pw[][])
+FC_mechanics::FC_mechanics(int rows, int columns,int setup[][], int hold[][], int pw[][])) {
+  this->rows = rows;
+  this->columns = columns;
+  this->setup[0][0] = setup;
+  this->hold[0][0] = hold;
+  this->pw[0][0] = pw;
+
+  //initialize data and latch lines
+  //initialize latch lines as even numbers 22 to 52
+  for (int latchPin = 0; latchPin < rows && (latchPin + 22 =< 52); latchPin += 2) {
+    latchPins[latchPin] = latchPin + 22;
+    pinMode(latchPins[latchPin], INPUT);
+  }
+
+  //initialize data lines as odd numbers 23 to 53
+  for (int dataPin = 0; dataPin < columns && (dataPin + 23 =< 53); dataPin += 2) {
+    dataPins[dataPin] = dataPin + 23;
+    pinMode(dataPins[dataPin], INPUT);
+  }
+
+}
+
+//
 
 
+//give the current state of the device
+FC_mechanics::get_state(){
+  return this->state[rows][columns]
+}
 
 //Sets up a test with a specified setup time, hold time, and pulse width
 //ts is setup time; tpw is the pulse width time; th is the hold time

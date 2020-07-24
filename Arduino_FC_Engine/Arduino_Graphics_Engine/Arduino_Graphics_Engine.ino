@@ -19,6 +19,7 @@
   BSD license, all text above must be included in any redistribution
  ****************************************************/
 
+#include "FC_mechanics.h"
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include "Adafruit_LEDBackpack.h"
