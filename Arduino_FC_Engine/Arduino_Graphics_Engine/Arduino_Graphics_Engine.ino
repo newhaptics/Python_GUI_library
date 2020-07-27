@@ -24,14 +24,38 @@
 #include <Adafruit_GFX.h>
 #include "Adafruit_LEDBackpack.h"
 
-Adafruit_8x8matrix matrix = Adafruit_8x8matrix();
+int ts[][] =
+  {{0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0}};
 
-void setup() {
-  Serial.begin(9600);
-  Serial.println("8x8 LED Matrix Test");
+int th[][] =
+  {{0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0}};
 
-  matrix.begin(0x70);  // pass in the address
-}
+
+int tpw[][] =
+  {{0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0},
+  {0,0,0,0,0,0,0,0}};
+
+
 
 uint8_t output[] =
   { B00111100,
@@ -42,6 +66,16 @@ uint8_t output[] =
     B10011001,
     B01000010,
     B00111100 };
+
+Adafruit_8x8matrix matrix = Adafruit_8x8matrix();
+FC_mechanics FC = FC_mechanics(8,8,ts,th,tpw);
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("8x8 LED Matrix Test");
+
+  matrix.begin(0x70);  // pass in the address
+}
 
 void loop() {
 

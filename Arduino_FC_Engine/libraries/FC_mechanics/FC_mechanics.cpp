@@ -1,13 +1,13 @@
 #include "Arduino.h"
 #include "FC_mechanics.h"
 
-//input the rows and columns of the chip and record the setup, hold, pw required to make a valid input
-FC_mechanics::FC_mechanics(int rows, int columns,int setup[][], int hold[][], int pw[][])) {
+//input the rows and columns of the chip and record the ts, th, pw required to make a valid input
+FC_mechanics::FC_mechanics(int rows, int columns,int ts[][], int th[][], int tpw[][])) {
   this->rows = rows;
   this->columns = columns;
-  this->setup[0][0] = setup;
-  this->hold[0][0] = hold;
-  this->pw[0][0] = pw;
+  this->ts[0][0] = ts;
+  this->th[0][0] = th;
+  this->tpw[0][0] = tpw;
 
   //initialize data and latch lines
   //initialize latch lines as even numbers 22 to 52
@@ -24,181 +24,85 @@ FC_mechanics::FC_mechanics(int rows, int columns,int setup[][], int hold[][], in
 
 }
 
-//
+//update how long the latch and data pins have been open
+bool FC_mechanics::check_inputs() {
+  //latch and data dummy variables to compare previous states
+  int L = 0;
+  int D = 0;
 
+  //get the latch and data pin states
+  for(int i = 0; i < rows; i++) {
+    L = digitalRead(latchPins[i]);
+    if (latchPin_states[i][0] != L) {
+      //if the previous state is not the same state push the state change
+      latchPin_times[i][1] = latchPin_times[i][0];
+      latchPin_times[i][0] = millis();
+      latchPin_states[i][1] = latchPin_states[i][0];
+      latchPin_states[i][0] = L;
+    }
+  }
+  for(int i = 0; i < columns; i++) {
+    D = digitalRead(dataPins[i]);
+    if (dataPin_states[i] != D) {
+      //if the previous state is not the same state record the time of change
+      dataPin_times[i][1] = dataPin_times[i][0];
+      dataPin_times[i][0] = millis();
+      dataPin_states[i][1] = dataPin_states[i][0];
+      dataPin_states[i][0] = D;
+    }
+  }
+
+  int new_state;
+  bool state_change = false;
+  //get the state changes based on the the data and latch change times
+  for(int row = 0; i < rows; row++){
+    for(int column = 0; i < columns; column++){
+
+      new_state = state_updater(state[row][column], ts[row][column], th[row][column], tpw[row][column], latchPin_times[row][0],latchPin_times[row][1],dataPin_times[column][0],dataPin_times[column][1],dataPin_states[column][0],dataPin_states[column][1],latchPin_states[row][0],latchPin_states[row][1]);
+      //if the new state is different signal a state change
+      if (new_state != state[row][column]){
+        state[row][column] = new_state;
+        state_change = true;
+      }
+
+    }
+  }
+  
+  return state_change
+
+}
+
+
+//state updater
+int FC_mechanics::state_updater(int state ,int minS, int minH, int minPW, int latchEdge1, int latchEdge2, int dataEdge1, int dataEdge2, int latchState1, int latchState2, int dataState1, int dataState2){
+
+
+  //first deteremine if latch went low or HIGH
+  if (latchState1 > latchState2) {
+    //calculate the current setup, hold, and pw
+    int s = latchEdge1 - dataEdge1;
+    int h = dataEdge2 - latchEdge1;
+    int pw = latchEdge2 - latchEdge1;
+
+    //make sure that the setup, hold, and pulse width fit within the physical contraints of the FC
+    if(s > minS && h > minH && pw > minPW){
+      //if the physical constraints fit then change state
+      return dataState2
+    } else {
+      return state
+    }
+
+  } else {
+    return state
+  }
+
+}
+
+
+
+}
 
 //give the current state of the device
-FC_mechanics::get_state(){
+int[][] FC_mechanics::get_state(){
   return this->state[rows][columns]
-}
-
-//Sets up a test with a specified setup time, hold time, and pulse width
-//ts is setup time; tpw is the pulse width time; th is the hold time
-//takes in microsecond delay
-void cellTest::timing_trigger(signed long ts, signed long tpw, signed long th) {
-  //boolean values to determine if each pulse has ran
-  bool setup_ran = false;
-  bool pulse_start = false;
-  bool pulse_end = false;
-  bool hold_ran = false;
-
-
-  //determine trigger times relative to the negative edge of pulse
-  unsigned long elapsed_time;
-  unsigned long pw_trigger_time = 500000;
-  unsigned long setup_trigger_time = pw_trigger_time - ts;
-  unsigned long hold_trigger_time = pw_trigger_time + th;
-  unsigned long pw_end_time = pw_trigger_time + tpw;
-
-   // Serial.println(pw_trigger_time);
-   // Serial.println(setup_trigger_time);
-   // Serial.println(hold_trigger_time);
-   // Serial.println(pw_end_time);
-
-  digitalWrite(led, LOW);
-  this->start_time = micros();
-
-  //maybe change? start time after delay
-
-  //delay on the front end
-  delay(100);
-
-  //wait for time to elapse and trigger elements on the proper times
-  while (!(setup_ran && pulse_start && pulse_end && hold_ran)) {
-    elapsed_time = micros() - start_time;
-
-
-    //trigger setup change relative to pulse width trigger
-    if ((elapsed_time >= setup_trigger_time) && !setup_ran) {
-      trigger_setup(final_state1);
-      setup_ran = true;
-    }
-
-    //trigger the pulse at the trigger time
-    if ((elapsed_time >= pw_trigger_time) && !pulse_start) {
-      trigger_pulse();
-      pulse_start = true;
-    }
-
-    //trigger hold change after hold time
-    if ((elapsed_time >= hold_trigger_time) && !hold_ran) {
-      trigger_hold(final_state1);
-      hold_ran = true;
-    }
-
-    //end pulse after pulse trigger time
-    if ((elapsed_time >= pw_end_time) && !pulse_end) {
-      end_pulse();
-      pulse_end = true;
-    }
-
-  }
-
-  //delay longer on the backend if the final state is 0
-  if (final_state1) {
-    delay(200);
-  } else {
-    delay(600);
-  }
-
-  //all triggers done
-  digitalWrite(led, HIGH);
-
-}
-
-//Same as timing trigger but dual
-//ts is setup time; tpw is the pulse width time; th is the hold time
-//takes in microsecond delay
-void cellTest::dual_timing_trigger(signed long ts, signed long tpw, signed long th){
-  //boolean values to determine if each pulse has ran
-  bool setup_ran = false;
-  bool pulse_start = false;
-  bool pulse_end = false;
-  bool hold_ran = false;
-
-  //determine trigger times relative to the negative edge of pulse
-  unsigned long elapsed_time;
-  unsigned long pw_trigger_time = 50;
-  unsigned long setup_trigger_time = pw_trigger_time - ts;
-  unsigned long hold_trigger_time = pw_trigger_time + th;
-  unsigned long pw_end_time = pw_trigger_time + tpw;
-
-  //  Serial.println(pw_trigger_time);
-  //  Serial.println(setup_trigger_time);
-  //  Serial.println(hold_trigger_time);
-  //  Serial.println(pw_end_time);
-
-  digitalWrite(led, LOW);
-  this->start_time = micros();
-
-  //maybe change? start time after delay
-
-  //delay on the front end
-  //delay(100);
-
-  //wait for time to elapse and trigger elements on the proper times
-  while (!(setup_ran && pulse_start && pulse_end && hold_ran)) {
-    elapsed_time = micros() - start_time;
-
-
-    //trigger setup change relative to pulse width trigger
-    if ((elapsed_time >= setup_trigger_time) && !setup_ran) {
-      trigger_setup(final_state1);
-      test_col++;
-      trigger_setup(final_state2);
-      test_col--;
-      //add one to column and start
-      setup_ran = true;
-      Serial.print("time elapsed for data line start "); Serial.print(elapsed_time / 1000);
-      Serial.print(" milliseconds");
-      Serial.println();
-    }
-
-    //trigger the pulse at the trigger time
-    if ((elapsed_time >= pw_trigger_time) && !pulse_start) {
-      trigger_pulse();
-      test_col++;
-      trigger_pulse();
-      test_col--;
-      pulse_start = true;
-      Serial.print("time elapsed for gate line start "); Serial.print(elapsed_time / 1000);
-      Serial.print(" milliseconds");
-      Serial.println();
-    }
-
-    //trigger hold change after hold time
-    if ((elapsed_time >= hold_trigger_time) && !hold_ran) {
-      trigger_hold(final_state1);
-      test_col++;
-      trigger_hold(final_state2);
-      test_col--;
-      hold_ran = true;
-      Serial.print("time elapsed for data line end "); Serial.print(elapsed_time / 1000);
-      Serial.print(" milliseconds");
-      Serial.println();
-    }
-
-    //end pulse after pulse trigger time
-    if ((elapsed_time >= pw_end_time) && !pulse_end) {
-      end_pulse();
-      test_col++;
-      end_pulse();
-      test_col--;
-      pulse_end = true;
-      Serial.print("time elapsed for gate line end "); Serial.print(elapsed_time / 1000);
-      Serial.print(" milliseconds");
-      Serial.println();
-    }
-
-  }
-
-  //delay longer on the backend if the final state is 0
-  // if (final_state) {
-  //   delay(200);
-  // } else {
-  //   delay(600);
-  // }
-
-  //all triggers done
-  digitalWrite(led, HIGH);
 }
