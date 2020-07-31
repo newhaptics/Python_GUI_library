@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-Created on Wed Jul 22 12:25:03 2020
+Created on Fri Jul 31 11:39:32 2020
 
 @author: Derek Joslin
 """
 
 
-import serial
-
-class HapticsEngine:
-
-    #the haptics engine contains a serial port connection object
+class BoardCom:
+    
+     #the haptics engine contains a serial port connection object
 
 
     def __init__(self,port):
@@ -148,6 +146,3 @@ class HapticsEngine:
     def __read_rx(self):
         self.__port.flush()
         return self.__port.read_until('').decode('utf-8')
-
-
-he = HapticsEngine('COM5')
