@@ -1,0 +1,52 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Jul 22 12:25:03 2020
+
+@author: Derek Joslin
+"""
+
+import TactileTweener
+
+
+class HapticsEngine:
+
+    #haptics engine takes in physics of a board and properly executes graphical commands based on the physics
+    #take in the physics of the fluidic chip from matlab and use that to determine timing for actions
+    #maybe have it take in an FC library class
+    
+    def __init__(self, tpw, th, ts, rows, columns):
+        self.__tpw = tpw
+        self.__th = th
+        self.__ts = ts
+        self.__rows = rows
+        self.__columns = columns
+        self.__currentState = [[0] * columns] * rows
+        self.__desiredState = [[0] * columns] * rows
+        
+    def get_state(self):
+        return self.__currentState
+    
+    #returns dictionary with all important transformation info
+    def get_refreshInfo(self):
+        return self.transformInfo
+    
+    #creates the frames and timing to get from current state to desired state
+    def refresh_chip(self):
+        #create a tweener to get the frames to get to the desired state
+        tt = TactileTweener()
+        
+        #tween the frames 
+   
+    
+    #set the state transform protocol 
+    def set_refreshProtocol(self,protocol):
+        
+    
+    #set a breakpoint frame to execute until
+    def set_breakpoint(self): 
+        
+    #move one frame forward in the fluidic chip state
+    def step_stateForward(self):
+        
+    #move one frame backward in the fluidic chip state
+    def step_stateBackward(self):

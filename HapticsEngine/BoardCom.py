@@ -5,10 +5,12 @@ Created on Fri Jul 31 11:39:32 2020
 @author: Derek Joslin
 """
 
+import serial
+
 
 class BoardCom:
     
-     #the haptics engine contains a serial port connection object
+     #the Board Com object contains a serial port connection object and commands to communicate with hardware
 
 
     def __init__(self,port):
