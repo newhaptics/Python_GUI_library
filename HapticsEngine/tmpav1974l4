@@ -31,7 +31,7 @@ class HapticsEngine:
             for columnIndex, element in enumerate(row):
                 if element < tpw[rowIndex][columnIndex]:
                     element = tpw[rowIndex][columnIndex]
-
+                
         self.__refreshInfo.update({'element refresh timing' : elementTiming})
 
     def get_currentState(self):
@@ -45,43 +45,37 @@ class HapticsEngine:
     def set_desiredState(self, newState):
         """ sets a desired state of the chip """
         self.__desiredState = newState.copy()
-
+    
     def set_refreshProtocol(self, protocol):
         """ sets the protocol for refreshing the chip and generating the refresh states """
         self.__refreshInfo['refresh protocol'] = protocol
 
     def generate_refreshStates(self):
-        """ creates the minimum number of frames to get from current state to desired state
+        """ creates the minimum number of frames to get from current state to desired state 
         returns the time it takes to get from current state to desired state """
-        self.__refresh_chip()
         uniqueFrames = self.__refreshInfo['unique frame times']
-        refreshFrames = {}
-# =============================================================================
-#         for time in uniqueFrames:
-#             refreshFrames.update({time : self.__get_timeFrame(time)})
-# =============================================================================
-
+        refreshFrames = []
+        for time in uniqueFrames + 1:
+            refreshFrames.insert(time, self.__get_timeFrame(time))
+            
         self.__refreshInfo.update({'refresh frames' : refreshFrames})
-
+    
         return uniqueFrames
-
+        
     def set_stateTime(self, t):
-        """ sets the current state to a point in time t milliseconds after the refresh occurs """
-        #first look for the refreshFrames precollected by the unique frames list
-        if t in self.__refreshInfo['refresh frames']:
-            self.__currentState = self.__refreshInfo['refresh frames'][t]
-        else:
-            self.__refreshInfo['refresh frames'].update({t : self.__get_timeFrame(t)})
-
-
-
-
-
-
+        """ sets the current state to a point in time t milliseconds after the refresh occurs """ 
+        
+        
+    
+# =============================================================================
+#     #returns dictionary with all important transformation info
+#     def get_refreshInfo(self):
+#         return self.__refreshInfo
+# =============================================================================
 
     def __refresh_chip(self):
-        """ creates the frames and to get from current state to desired state """
-
+     """ creates the frames and to get from current state to desired state """
+        
         #create a tweener to get the frames to get to the desired state
         tt = TactileTweener.TactileTweener()
 
@@ -94,7 +88,7 @@ class HapticsEngine:
         #calculate the time when each element will refresh for each frame
         elementTiming = self.__refreshInfo['element refresh timing']
         timeMatrix = [[currentTime for i in range(0,self.__columns)] for j in range(0,self.__rows)]
-
+        
         x = 0
         highest = 0
         #list for timing of each unique frame
@@ -103,16 +97,14 @@ class HapticsEngine:
             for rowIndex, row in enumerate(frame['element change']):
                 for columnIndex, elementChange in enumerate(row):
                     if elementChange == True:
-                        val = timeMatrix[rowIndex][columnIndex] + elementTiming[rowIndex][columnIndex] + highest
-                        timeMatrix[rowIndex][columnIndex] = val
-                        uniqueFrames.append(timeMatrix[rowIndex][columnIndex] + 1)
+                        timeMatrix[rowIndex][columnIndex] = timeMatrix[rowIndex][columnIndex] + elementTiming[rowIndex][columnIndex] + highest
+                        uniqueFrames.append(timeMatrix[rowIndex][columnIndex])
             if highest < (max(map(max, timeMatrix))):
                 highest = (max(map(max, timeMatrix)))
             #display_frame(frame['state'], frame['element change'], timeMatrix, x)
             x += 1
             refreshFrames[index].update({'timing data': copy.deepcopy(timeMatrix)})
-
-        uniqueFrames = sorted(list(set(uniqueFrames)))
+        
         self.__refreshInfo.update({'frame info' : refreshFrames, 'unique frame times' : uniqueFrames})
 
     def __get_timeFrame(self,time):
@@ -123,12 +115,12 @@ class HapticsEngine:
         for frameIndex,frame in enumerate(self.__refreshInfo['frame info']):
             for rowIndex,row in enumerate(frame['timing data']):
                 for columnIndex,changeTime in enumerate(row):
-                    if (changeTime < time) and (frameIndex > 0):
+                    if (changeTime <= time) and (frameIndex > 0):
                         #get the frame before and the current frame
                         beforeFrame = self.__refreshInfo['frame info'][frameIndex - 1]
                         currentFrame = self.__refreshInfo['frame info'][frameIndex]
                          #set the appropriate value equal to the current state
-                        if currentFrame['timing data'][rowIndex][columnIndex] < time:
+                        if currentFrame['timing data'][rowIndex][columnIndex] <= time:
                             self.__currentState[rowIndex][columnIndex] = currentFrame['state'][rowIndex][columnIndex]
                         else:
                             self.__currentState[rowIndex][columnIndex] = beforeFrame['state'][rowIndex][columnIndex]
@@ -137,7 +129,24 @@ class HapticsEngine:
 
 
 # =============================================================================
-#
+#         print('state at time: {0}'.format(time))
+#         print('---------------------------\n\r')
+#         print('\n'.join([' '.join(['{:4}'.format(item) for item in row])
+#                          for row in self.__currentState]))
+# =============================================================================
+# =============================================================================
+#                         #loop through current frame and put in the appropriate value
+#                         for rowIndex,row in enumerate(self.__currentState):
+#                             for columnIndex,element in enumerate(row):
+#                                 #set the appropriate value equal to the current state
+#                                 if currentFrame['timing data'][rowIndex][columnIndex] < time:
+#                                     self.__currentState[rowIndex][columnIndex] = currentFrame['state'][rowIndex][columnIndex]
+#                                 else:
+#                                     self.__currentState[rowIndex][columnIndex] = beforeFrame['state'][rowIndex][columnIndex]
+# =============================================================================
+        
+# =============================================================================
+# 
 # def display_frame(state, element_change, timing_data, number):
 #     print('frame: {0}'.format(number))
 #     print('---------------------------\n\r')
@@ -149,5 +158,7 @@ class HapticsEngine:
 #     print('timing data')
 #     print('\n'.join([' '.join(['{:4}'.format(item) for item in row])
 #                      for row in timing_data]))
-#
+# 
 # =============================================================================
+
+

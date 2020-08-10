@@ -12,8 +12,8 @@ for x in range(0,20):
     print('[', end = '')
     for y in range(0,20):
         if y == x:
-            print('0, ', end = '')
+            print('100, ', end = '')
         else:
-            print('0, ', end = '')
+            print('100, ', end = '')
     print('],')
 print(']')

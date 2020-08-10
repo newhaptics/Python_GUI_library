@@ -2,13 +2,13 @@
 """
 Created on Wed Jul 29 10:59:52 2020
 
-@author: NewHaptics01
+@author: Derek Joslin
 """
 import numpy as np
 
 
 #class to tween frames of a matrix using a predefined algorithm
-class TactileTweenor:
+class TactileTweener:
 
     def __init__(self,**kwargs):
         self.__refreshProtocols = {'row by row': self.rowByrow, 'column element by element': self.column_elementByelement, 'row element by element': self.row_elementByelement}
@@ -23,41 +23,47 @@ class TactileTweenor:
         columns = len(startState[0])
         frames = [{'state' : startState, 'element change' : [[False] * rows] * columns}]
 
-        x = 0
-
-
-        print('frame: {0}'.format(x))
-        x += 1
-        print('---------------------------\n\r')
-        print('\n'.join([''.join(['{:4}'.format(item) for item in row])
-                         for row in frames[-1]['state']]))
-        print('T/F')
-        print('\n'.join([''.join(['{:4}'.format(item) for item in row])
-                         for row in frames[-1]['element change']]))
+# =============================================================================
+#         x = 0
+# 
+# 
+#         print('frame: {0}'.format(x))
+#         x += 1
+#         print('---------------------------\n\r')
+#         print('\n'.join([''.join(['{:4}'.format(item) for item in row])
+#                          for row in frames[-1]['state']]))
+#         print('T/F')
+#         print('\n'.join([''.join(['{:4}'.format(item) for item in row])
+#                          for row in frames[-1]['element change']]))
+# =============================================================================
 
         while frames[-1]['state'] != endState:
             newFrame = self.__refreshProtocols[protocol](frames[-1]['state'],endState)
             #check which frames are different to calculate frames later on
             elementChanges = (np.array(frames[-1]['state']) != np.array(newFrame)).tolist()
             frames.append({'state' : newFrame, 'element change' : elementChanges})
-            print('frame: {0}'.format(x))
-            x += 1
-            print('---------------------------\n\r')
-            print('\n'.join([''.join(['{:4}'.format(item) for item in row])
-                             for row in frames[-1]['state']]))
-            print('T/F')
-            print('\n'.join([''.join(['{:4}'.format(item) for item in row])
-                             for row in frames[-1]['element change']]))
+# =============================================================================
+#             print('frame: {0}'.format(x))
+#             x += 1
+#             print('---------------------------\n\r')
+#             print('\n'.join([''.join(['{:4}'.format(item) for item in row])
+#                              for row in frames[-1]['state']]))
+#             print('T/F')
+#             print('\n'.join([''.join(['{:4}'.format(item) for item in row])
+#                              for row in frames[-1]['element change']]))
+# =============================================================================
         else:
-            print('frame: inf')
-            print('---------------------------\n\r')
-            print('\n'.join([''.join(['{:4}'.format(item) for item in row])
-                             for row in frames[-1]['state']]))
-            print('T/F')
-            print('\n'.join([''.join(['{:4}'.format(item) for item in row])
-      for row in frames[-1]['element change']]))
+# =============================================================================
+#             print('frame: inf')
+#             print('---------------------------\n\r')
+#             print('\n'.join([''.join(['{:4}'.format(item) for item in row])
+#                              for row in frames[-1]['state']]))
+#             print('T/F')
+#             print('\n'.join([''.join(['{:4}'.format(item) for item in row])
+#       for row in frames[-1]['element change']]))
+# =============================================================================
 
-        return frames
+            return frames
 
     #change one row at a time in order of precedence
     def rowByrow(self,startMatrix,targetMatrix):
