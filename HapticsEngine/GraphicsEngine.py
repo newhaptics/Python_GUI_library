@@ -11,10 +11,8 @@ import numpy as np
 import cairo as ca
 import math
 
-
-
 class GraphicsEngine:
-    
+
     def __init__(self,matrix):
         #create the graphics
         self.__data = np.array(matrix).astype(dtype=np.uint8)
@@ -25,7 +23,7 @@ class GraphicsEngine:
         self.__ct = ca.Context(surface)
         self.__ct.set_operator(ca.OPERATOR_SOURCE)
         self.__output = 1
-    
+
     def read_matrix(self, matrix):
         #create the graphics
         self.__data = np.array(matrix).astype(dtype=np.uint8)
@@ -34,32 +32,33 @@ class GraphicsEngine:
         self.state = matrix
         surface = ca.ImageSurface.create_for_data(self.__data, ca.FORMAT_A8, dim[0], dim[1])
         self.__ct = ca.Context(surface)
-        
-    
+
+
     def set_output(self,val):
         """ sets the output value of all pycairo commands """
         self.__output = val
-        
-        
+
+
     def select_element(self,coord):
+        """ selects a single element to change """
         if self.__output:
-            self.__data[coord[0], coord[1]] = 255    
+            self.__data[coord[0], coord[1]] = 255
         else:
             self.__data[coord[0],coord[1]] = 0
-        
+
         self.state[coord[0]][coord[1]] = self.__output
-    
-    
-    
+
+
+
     def make_line(self, start, end, width):
-        """ takes in two tuples that represent coordinates of the 
+        """ takes in two tuples that represent coordinates of the
         start and end locations of the line """
         #use offset if width is odd
         if (width % 2) == 0:
             offset = 0
         else:
             offset = 0.5
-                
+
         #add .5 to the start and end
         startX = start[0] + offset
         startY = start[1] + offset
@@ -71,9 +70,11 @@ class GraphicsEngine:
         self.__ct.set_source_rgba(self.__output, self.__output, self.__output, self.__output)
         self.__ct.stroke()
         self.__save_data()
-        
-        
+
+
     def make_bezierCurve(self, start, c1, c2, end, width):
+        """ takes in a start point and end point as well as two curve points
+        it produces a line that bends to all the points """
         startX = start[0]
         startY = start[1]
         endX = end[0]
@@ -84,91 +85,181 @@ class GraphicsEngine:
         self.__ct.set_source_rgba(self.__output, self.__output, self.__output, self.__output)
         self.__ct.stroke()
         self.__save_data()
-        
+
     def make_circle(self, center, radius, width, fill):
         """ take in a center and radius and fill or stroke depending on selection"""
         self.__ct.arc(center[0], center[1], radius, 0, 2*math.pi)
         self.__ct.set_line_width(width)
+        self.__ct.set_source_rgba(self.__output, self.__output, self.__output, self.__output)
         if fill:
             self.__ct.fill()
         else:
             self.__ct.stroke()
         self.__save_data()
-        
-        
-        
-    def make_polgon(self, start, points, width, fill):
-        startX = start[0]
-        startY = start[1]
+
+
+
+    def make_polygon(self, start, points, width, fill):
+        """ take in multiple points and string them all together """
+        #use offset if width is odd
+        if (width % 2) == 0:
+            offset = 0
+        else:
+            offset = 0.5
+
+        startX = start[0] + offset
+        startY = start[1] + offset
+
         self.__ct.move_to(startX,startY)
         for point in points:
-            self.__ct.line_to(point[0],point[1])
-        self.__ct.line_to(startX, startY)    
-        
+            self.__ct.line_to(point[0] + offset, point[1] + offset)
+        self.__ct.line_to(startX, startY)
         self.__ct.set_line_width(width)
+        self.__ct.set_source_rgba(self.__output, self.__output, self.__output, self.__output)
         if fill:
             self.__ct.fill()
         else:
             self.__ct.stroke()
         self.__save_data()
-            
-        
-        
+
+
+
     def make_rectangle(self, corner1, corner2, width, fill):
-        startX = corner1[0]
-        startY = corner1[1]
-        endX = corner2[0]
-        endY = corner2[1]
-        X1 = endX - startX
+        """ take in two corners of a rectangle and string together to make the correct shape """
+        #use offset if width is odd
+        if (width % 2) == 0:
+            offset = 0
+        else:
+            offset = 0.5
+
+        startX = corner1[0] + offset
+        startY = corner1[1] + offset
+        endX = corner2[0] + offset
+        endY = corner2[1] + offset
+        X1 = endX
         Y1 = startY
-        X2 = startX - endY
+        X2 = startX
         Y2 = endY
         self.__ct.move_to(startX,startY)
         self.__ct.line_to(X1,Y1)
         self.__ct.line_to(endX,endY)
         self.__ct.line_to(X2,Y2)
+        self.__ct.line_to(startX,startY)
         self.__ct.set_line_width(width)
+        self.__ct.set_source_rgba(self.__output, self.__output, self.__output, self.__output)
         if fill:
             self.__ct.fill()
         else:
             self.__ct.stroke()
         self.__save_data()
-        
+
+    def write_latin(self, start, displayString, font, size):
+        """ takes in starting point for font and string to write
+        naturally fills up the screen as you type """
+        startX = start[0]
+        startY = start[1]
+        #move to start point
+        self.__ct.move_to(startX,startY)
+
+        #select the braille font
+        self.__ct.select_font_face(font, ca.FONT_SLANT_NORMAL, ca.FONT_WEIGHT_BOLD)
+        self.__ct.set_font_size(size)
+
+
+        #type out the text
+        self.__ct.set_source_rgba(self.__output, self.__output, self.__output, self.__output)
+        self.__ct.show_text(displayString)
+        self.__save_data()
+
+    def write_braille(self, start, brailleString):
+        """ takes in starting point for font and string to write
+        naturally fills up the screen as you type """
+        startX = start[0]
+        startY = start[1]
+        #move to start point
+        self.__ct.move_to(startX,startY)
+
+        #select the braille font
+        self.__ct.select_font_face("Braille", ca.FONT_SLANT_NORMAL, ca.FONT_WEIGHT_NORMAL)
+        self.__ct.set_font_size(3)
+
+
+        #type out the text
+        self.__ct.set_source_rgba(self.__output, self.__output, self.__output, self.__output)
+        #xy locations of typing the letters and dimensions to know where to stop
+        x = startX
+        y = startY
+        dim = self.__data.shape
+        dimX = dim[0]
+        dimY = dim[1]
+        for letter in brailleString:
+            if letter == '\n':
+                if y + 3 < dimY:
+                    x = 0
+                    y = y + 3
+                else:
+                    break
+            else:
+                self.__ct.show_text(letter)
+                if x + 2 < dimX:
+                    x = x + 2
+                elif y + 3 < dimY:
+                    y = y + 3
+                    x = 0
+                else:
+                    break
+            self.__ct.move_to(x,y)
+        self.__save_data()
+
+
+    def clear(self):
+        self.__data[:,:] = 0
+        self.__save_data()
+
     def __save_data(self):
-        print('---------------------------\n\r')
-        print('\n'.join([' '.join(['{:4}'.format(item) for item in row])
-                         for row in self.__data.tolist()]))
         self.__data[self.__data > 115] = 255
         self.__data[self.__data != 255] = 0
         self.state.clear()
         self.state.extend((self.__data == 255).tolist())
-        
-        
-        
-        
-        
-        
-data = np.zeros((20,20), dtype=np.uint8)
-data = data.tolist()
-ge = GraphicsEngine(data)
-ge.set_output(1)
-ge.make_rectangle((5,5), (15,15), 1, 0)
-#ge.make_polgon((5,5), [(7,8),(3,12)], 1, 0)
 
-#ge.make_bezierCurve((1,1), (14,3), (4,10), (18,20), 3)
-# =============================================================================
-# ge.make_circle((10,10), 9.5, 2, 1)
-# ge.make_line((19,0),(0,19), 1)
-# ge.make_line((5,20),(20,0), 1)
-# ge.make_line((5,0),(5,20), 1)
-# ge.make_line((0,5),(20,5), 2)
-# ge.set_output(0)
-# ge.make_line((8,0),(8,20), 5)
-# ge.make_line((0,8),(20,8), 5)
-# ge.select_element((5,3))
-# =============================================================================
 
-# write output
-print('---------------------------\n\r')
-print('\n'.join([' '.join(['{:4}'.format(item) for item in row])
-         for row in data]))
+
+
+
+
+# =============================================================================
+# data = np.zeros((20,20), dtype=np.uint8)
+# data = data.tolist()
+# ge = GraphicsEngine(data)
+# ge.set_output(1)
+# for word in ["hello", "world", "this", "is", "derek"]:
+#     ge.set_output(1)
+#     ge.write_braille((2,14), word)
+#     time.sleep(1)
+#     print('---------------------------\n\r')
+#     print('\n'.join([' '.join(['{:4}'.format(item) for item in row])
+#                      for row in data]))
+#     ge.clear()
+#
+# #ge.make_rectangle((2,2), (17,17), 1, 0)
+# #ge.make_polgon((0,0), [(0,19),(19,9)], 1, 1)
+#
+# #ge.make_bezierCurve((1,1), (14,3), (4,10), (18,20), 3)
+# # =============================================================================
+# # ge.make_circle((10,10), 9.5, 2, 1)
+# # ge.make_line((19,0),(0,19), 1)
+# # ge.make_line((5,20),(20,0), 1)
+# # ge.make_line((5,0),(5,20), 1)
+# # ge.make_line((0,5),(20,5), 2)
+# # ge.set_output(0)
+# # ge.make_line((8,0),(8,20), 5)
+# # ge.make_line((0,8),(20,8), 5)
+# # ge.select_element((5,3))
+# # =============================================================================
+#
+# # write output
+# print('---------------------------\n\r')
+# print('\n'.join([' '.join(['{:4}'.format(item) for item in row])
+#          for row in data]))
+#
+# =============================================================================

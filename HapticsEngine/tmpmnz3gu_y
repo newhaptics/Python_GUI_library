@@ -81,19 +81,14 @@ tpw = [[100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 10
 
 #create the backend haptics engine
 engine = he.HapticsEngine(tpw,th,ts, 20, 20, 'row by row')
-full = 0
-width = 1
-times = 0
 
 
 def display_matrix(matrix,number):
+    print(chr(27) + "[2J")
     print('time: {0}'.format(number))
-    print('---------------------------\n')
+    print('---------------------------\n\r')
     print('\n'.join([' '.join(['{:4}'.format(item) for item in row])
                  for row in matrix]))
-    print('---------------------------\n')
-    if engine.check_connection():
-        engine.send_toBoard()
 
 def erase(onOff):
     if onOff == "on":
@@ -101,87 +96,20 @@ def erase(onOff):
     else:
         engine.ge.set_output(1)
 
-def fill(onOff):
-    global full
-    if onOff == "on":
-        full = 1
-    else:
-        full = 0
-
-def stroke(size):
-    global width
-    width = size
-
 def dot(coord):
     engine.ge.select_element(coord)
     print("desired state \n")
-    display_matrix(engine.get_desiredState(), 0)
-
-def line(start, end):
+    display_matrix(engine.get_currentState, 0)
+    
+def line(start, end, width):
     engine.ge.make_line(start, end, width)
     print("desired state \n")
-    display_matrix(engine.get_desiredState(), 0)
-
-def curve(start, control1, control2, end):
+    display_matrix(engine.get_currentState, 0)
+    
+def curve(start, control1, control2, end, width):
     engine.ge.make_bezierCurve(start, control1, control2, end, width)
     print("desired state \n")
-    display_matrix(engine.get_desiredState(), 0)
-
-def circle(center, radius):
-    engine.ge.make_circle(center, radius, width, full)
-    print("desired state \n")
-    display_matrix(engine.get_desiredState(), 0)
-
-def rect(corner1, corner2):
-    engine.ge.make_rectangle(corner1, corner2, width)
-    print("desired state \n")
-    display_matrix(engine.get_desiredState(), 0)
-
-def triangle(point1, point2, point3):
-    engine.ge.make_polygon(point1, [point2, point3], width, full)
-    print("desired state \n")
-    display_matrix(engine.get_desiredState(), 0)
-
-def polygon(points):
-    engine.ge.make_polygon(points[0], points[1:-1], width, full)
-    print("desired state \n")
-    display_matrix(engine.get_desiredState(), 0)
-    
-def clear():
-    engine.ge.clear()
-    print("desired state \n")
-    display_matrix(engine.get_desiredState(), 0)
-
-def state():
-    print("desired state \n")
-    display_matrix(engine.get_currentState(), 0)
-
-def refresh():
-    global times
-    times = engine.generate_refreshStates()
-    clock2 = time.perf_counter()
-    elapsed_time = 0
-    for now in times:
-        while elapsed_time != now:
-            elapsed_time = round((time.perf_counter() - clock2)*1000)
-        else:
-            engine.set_stateTime(now)
-            display_matrix(engine.get_currentState(), now)
-    clock2 = time.perf_counter() - clock2
-    print(clock2)
-    
-def times(now):
-    engine.set_stateTime(now)
-    display_matrix(engine.get_currentState(), now)
-    
-def frames():
-    print(times)
-    
-def connect(COM):
-    engine.establish_connection(COM)
-    
-def disconnect():
-    engine.end_connection()
+    display_matrix(engine.get_currentState, 0)
     
 
 
@@ -202,30 +130,16 @@ if __name__ == '__main__':
     'inprompt':   hl.format('darkBlue', 'bold'),
     'outprompt':  hl.format('darkRed', 'bold'),
     })
-
-
-    #add all the functions of the program
-    console.push_local_ns('erase', erase)
-    console.push_local_ns('fill', fill)
-    console.push_local_ns('stroke', stroke)
-    console.push_local_ns('dot', dot)
-    console.push_local_ns('line', line)
-    console.push_local_ns('curve', curve)
-    console.push_local_ns('circle', circle)
-    console.push_local_ns('rect', rect)
-    console.push_local_ns('triangle', triangle)
-    console.push_local_ns('polygon', polygon)
-    console.push_local_ns('clear', clear)
-    console.push_local_ns('state', state)
-    console.push_local_ns('refresh', refresh)
-    console.push_local_ns('times', times)
-    console.push_local_ns('frames', frames)
-    console.push_local_ns('connect', connect)
-    console.push_local_ns('disconnect', disconnect)
     
-
+    
+    #
+    console.push_local_ns('greet', greet)
     console.show()
 
     console.eval_queued()
 
     sys.exit(app.exec_())
+    
+    
+    
+    

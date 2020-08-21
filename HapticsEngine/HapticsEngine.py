@@ -6,7 +6,9 @@ Created on Wed Jul 22 12:25:03 2020
 """
 
 import copy
-import TactileTweener
+import TactileTweener as tac
+import GraphicsEngine as gr
+import BoardCom as bc
 import numpy as np
 
 
@@ -16,7 +18,7 @@ class HapticsEngine:
     #take in the physics of the fluidic chip from matlab and use that to determine timing for actions
     #maybe have it take in an FC library class
 
-    def __init__(self, tpw, th, ts, rows, columns, refreshProtocol):
+    def __init__(self, tpw, th, ts, rows, columns, refreshProtocol, COM):
         self.__tpw = tpw
         self.__th = th
         self.__ts = ts
@@ -24,6 +26,8 @@ class HapticsEngine:
         self.__columns = columns
         self.__currentState = [[0 for i in range(0,columns)] for j in range(0,rows)]
         self.__desiredState = [[0 for i in range(0,columns)] for j in range(0,rows)]
+        self.ge = gr.GraphicsEngine(self.__desiredState)
+        self.__connected = False
         self.__refreshInfo = {'refresh protocol': refreshProtocol}
         #calculate how fast each element in the chip updates based on the setup, hold, and pulse width of the element
         elementTiming = (np.array(ts) + np.array(th)).tolist()
@@ -72,6 +76,31 @@ class HapticsEngine:
             self.__currentState = self.__refreshInfo['refresh frames'][t]
         else:
             self.__refreshInfo['refresh frames'].update({t : self.__get_timeFrame(t)})
+            
+    def establish_connection(self, COM):
+        self.__com = bc.BoardCom(COM)
+        self.__connected = True
+        self.__com.set_size(self.__rows,self.__columns)
+        self.__com.set_times(max(max(self.__ts)), max(max(self.__tpw)), max(max(self.__tph)))
+        self.__com.set_row(0,1)
+        self.__com.set_col(self.__rows, 1)
+        self.__com.set_trig(60)
+        self.__com.set_source(61)
+        self.__com.set_matrix(self.__currentState)
+        self.__com.start()
+        self.__com.set_led(1,1)
+        
+    def end_connection(self):
+        self.__com.close()
+        self.connected = False
+        
+    def check_connection(self):
+        return self.__connected
+    
+    def send_toBoard(self):
+        self.__com.set_matrix(self.__currentState)
+        self.__com.refresh()
+        
 
 
 
@@ -83,7 +112,7 @@ class HapticsEngine:
         """ creates the frames and to get from current state to desired state """
 
         #create a tweener to get the frames to get to the desired state
-        tt = TactileTweener.TactileTweener()
+        tt = tac.TactileTweener()
 
         #tween the frames
         refreshFrames = tt.get_tweenFrames(copy.deepcopy(self.__currentState), copy.deepcopy(self.__desiredState), self.__refreshInfo['refresh protocol'])

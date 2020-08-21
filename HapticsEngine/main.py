@@ -134,7 +134,10 @@ def display_refresh():
     
 
 engine = he.HapticsEngine(tpw,th,ts, 20, 20, 'row by row')
-engine.set_desiredState(endMatrix)
+engine.ge.write_braille((3,12), "hello \n world")
+engine.ge.make_circle((10,10), 10, 1, 0)
+display_matrix(engine.get_desiredState(), 0)
+#engine.set_desiredState(endMatrix)
 
 clock1 = time.perf_counter()
 times = engine.generate_refreshStates()
