@@ -15,22 +15,33 @@ class GraphicsEngine:
 
     def __init__(self,matrix):
         #create the graphics
-        self.__data = np.array(matrix).astype(dtype=np.uint8)
+        #first figure out the dimensions of the given matrix
+        newMat = np.array(matrix)
+        dim = newMat.shape
+        newDim = (math.ceil(dim[0]/20)*20, math.ceil(dim[1]/20)*20)
+        self.__data = np.zeros((newDim[0],newDim[1]), dtype=np.uint8)
+        #copy data from the input matrix to internal data
+        self.__data[0:dim[0],0:dim[1]] = newMat
         self.__data[self.__data == 1] = 255
-        dim = self.__data.shape
         self.state = matrix
-        surface = ca.ImageSurface.create_for_data(self.__data, ca.FORMAT_A8, dim[0], dim[1])
+        surface = ca.ImageSurface.create_for_data(self.__data, ca.FORMAT_A8, newDim[0], newDim[1])
         self.__ct = ca.Context(surface)
         self.__ct.set_operator(ca.OPERATOR_SOURCE)
         self.__output = 1
 
     def read_matrix(self, matrix):
         #create the graphics
-        self.__data = np.array(matrix).astype(dtype=np.uint8)
+        #first figure out the dimensions of the given matrix
+        newMat = np.array(matrix)
+        dim = newMat.shape
+        newDim = (math.ceil(dim[0]/20)*20, math.ceil(dim[1]/20)*20)
+        self.__data = np.zeros((newDim[0],newDim[1]), dtype=np.uint8)
+        #copy data from the input matrix to internal data
+        self.__data[0:dim[0],0:dim[1]] = newMat
         self.__data[self.__data == 1] = 255
         dim = self.__data.shape
         self.state = matrix
-        surface = ca.ImageSurface.create_for_data(self.__data, ca.FORMAT_A8, dim[0], dim[1])
+        surface = ca.ImageSurface.create_for_data(self.__data, ca.FORMAT_A8, newDim[0], newDim[1])
         self.__ct = ca.Context(surface)
 
 
@@ -217,10 +228,14 @@ class GraphicsEngine:
         self.__save_data()
 
     def __save_data(self):
+        #print('---------------------------\n\r')
+        #print('\n'.join([' '.join(['{:4}'.format(item) for item in row])
+        # for row in self.__data]))
         self.__data[self.__data > 115] = 255
         self.__data[self.__data != 255] = 0
+        dim = np.array(self.state).shape
         self.state.clear()
-        self.state.extend((self.__data == 255).tolist())
+        self.state.extend((self.__data[0:dim[0],0:dim[1]] == 255).tolist())
 
 
 
@@ -228,10 +243,12 @@ class GraphicsEngine:
 
 
 # =============================================================================
-# data = np.zeros((20,20), dtype=np.uint8)
+# data = np.zeros((14,15), dtype=np.uint8)
 # data = data.tolist()
 # ge = GraphicsEngine(data)
 # ge.set_output(1)
+# =============================================================================
+# =============================================================================
 # for word in ["hello", "world", "this", "is", "derek"]:
 #     ge.set_output(1)
 #     ge.write_braille((2,14), word)
@@ -240,26 +257,25 @@ class GraphicsEngine:
 #     print('\n'.join([' '.join(['{:4}'.format(item) for item in row])
 #                      for row in data]))
 #     ge.clear()
-#
-# #ge.make_rectangle((2,2), (17,17), 1, 0)
-# #ge.make_polgon((0,0), [(0,19),(19,9)], 1, 1)
-#
-# #ge.make_bezierCurve((1,1), (14,3), (4,10), (18,20), 3)
-# # =============================================================================
-# # ge.make_circle((10,10), 9.5, 2, 1)
-# # ge.make_line((19,0),(0,19), 1)
-# # ge.make_line((5,20),(20,0), 1)
-# # ge.make_line((5,0),(5,20), 1)
-# # ge.make_line((0,5),(20,5), 2)
-# # ge.set_output(0)
-# # ge.make_line((8,0),(8,20), 5)
-# # ge.make_line((0,8),(20,8), 5)
-# # ge.select_element((5,3))
-# # =============================================================================
-#
-# # write output
+# =============================================================================
+
+#ge.make_rectangle((4,4), (8,8), 1, 0)
+#ge.make_polgon((0,0), [(0,19),(19,9)], 1, 1)
+
+#ge.make_bezierCurve((1,1), (14,3), (4,10), (18,20), 3)
+#ge.make_circle((7,7), 7, 1, 0)
+#ge.make_line((0,0),(15,14), 1)
+#ge.make_line((5,20),(20,0), 1)
+#ge.make_line((5,0),(5,20), 1)
+#ge.make_line((0,5),(20,5), 2)
+#ge.set_output(0)
+#ge.make_line((8,0),(8,20), 5)
+#ge.make_line((0,8),(20,8), 5)
+#ge.select_element((5,3))
+
+# write output
+# =============================================================================
 # print('---------------------------\n\r')
 # print('\n'.join([' '.join(['{:4}'.format(item) for item in row])
 #          for row in data]))
-#
 # =============================================================================

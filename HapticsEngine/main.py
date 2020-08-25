@@ -134,6 +134,7 @@ def display_refresh():
     
 
 engine = he.HapticsEngine(tpw,th,ts, 20, 20, 'row by row')
+engine.establish_connection("COM5")
 engine.ge.write_braille((3,12), "hello \n world")
 engine.ge.make_circle((10,10), 10, 1, 0)
 display_matrix(engine.get_desiredState(), 0)
@@ -147,6 +148,8 @@ clock1 = time.perf_counter() - clock1
 clock2 = time.perf_counter()
 display_refresh()
 clock2 = time.perf_counter() - clock2
+
+engine.send_toBoard()
 
 print(clock1)
 print(clock2)

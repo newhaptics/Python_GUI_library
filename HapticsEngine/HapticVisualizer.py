@@ -80,7 +80,7 @@ tpw = [[100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 10
 
 
 #create the backend haptics engine
-engine = he.HapticsEngine(tpw,th,ts, 20, 20, 'row by row')
+engine = he.HapticsEngine(tpw,th,ts, 15, 14, 'row by row')
 full = 0
 width = 1
 times = 0
@@ -92,8 +92,6 @@ def display_matrix(matrix,number):
     print('\n'.join([' '.join(['{:4}'.format(item) for item in row])
                  for row in matrix]))
     print('---------------------------\n')
-    if engine.check_connection():
-        engine.send_toBoard()
 
 def erase(onOff):
     if onOff == "on":
@@ -147,6 +145,16 @@ def polygon(points):
     print("desired state \n")
     display_matrix(engine.get_desiredState(), 0)
     
+def braille(point, text):
+    engine.ge.write_braille(point, text)
+    print("desired state \n")
+    display_matrix(engine.get_desiredState(), 0)
+    
+def latin(point, text, font, size):
+    engine.ge.write_latin(point, text, font, size)
+    print("desired state \n")
+    display_matrix(engine.get_desiredState(), 0)
+    
 def clear():
     engine.ge.clear()
     print("desired state \n")
@@ -169,11 +177,15 @@ def refresh():
             display_matrix(engine.get_currentState(), now)
     clock2 = time.perf_counter() - clock2
     print(clock2)
+    if engine.check_connection():
+        engine.send_toBoard()
     
 def times(now):
     engine.set_stateTime(now)
     display_matrix(engine.get_currentState(), now)
-    
+    if engine.check_connection():
+        engine.send_toBoard()
+
 def frames():
     print(times)
     
@@ -183,7 +195,6 @@ def connect(COM):
 def disconnect():
     engine.end_connection()
     
-
 
 if __name__ == '__main__':
     app = QApplication([])
@@ -215,6 +226,8 @@ if __name__ == '__main__':
     console.push_local_ns('rect', rect)
     console.push_local_ns('triangle', triangle)
     console.push_local_ns('polygon', polygon)
+    console.push_local_ns('latin', latin)
+    console.push_local_ns('braille', braille)
     console.push_local_ns('clear', clear)
     console.push_local_ns('state', state)
     console.push_local_ns('refresh', refresh)
@@ -222,6 +235,7 @@ if __name__ == '__main__':
     console.push_local_ns('frames', frames)
     console.push_local_ns('connect', connect)
     console.push_local_ns('disconnect', disconnect)
+    
     
 
     console.show()

@@ -18,7 +18,7 @@ class HapticsEngine:
     #take in the physics of the fluidic chip from matlab and use that to determine timing for actions
     #maybe have it take in an FC library class
 
-    def __init__(self, tpw, th, ts, rows, columns, refreshProtocol, COM):
+    def __init__(self, tpw, th, ts, rows, columns, refreshProtocol):
         self.__tpw = tpw
         self.__th = th
         self.__ts = ts
@@ -78,35 +78,40 @@ class HapticsEngine:
             self.__refreshInfo['refresh frames'].update({t : self.__get_timeFrame(t)})
             
     def establish_connection(self, COM):
-        self.__com = bc.BoardCom(COM)
+        self.com = bc.BoardCom(COM)
         self.__connected = True
-        self.__com.set_size(self.__rows,self.__columns)
-        self.__com.set_times(max(max(self.__ts)), max(max(self.__tpw)), max(max(self.__tph)))
-        self.__com.set_row(0,1)
-        self.__com.set_col(self.__rows, 1)
-        self.__com.set_trig(60)
-        self.__com.set_source(61)
-        self.__com.set_matrix(self.__currentState)
-        self.__com.start()
-        self.__com.set_led(1,1)
+        self.com.set_size(self.__rows,self.__columns)
+        self.com.get_size()
+        self.com.set_times(max(max(self.__ts)), max(max(self.__tpw)), max(max(self.__th)))
+        self.com.get_times()
+        self.com.set_row(self.__columns + 2,1)
+        self.com.get_row()
+        self.com.set_col(2, 1)
+        self.com.get_col()
+        self.com.set_trig(1)
+        self.com.get_trig()
+        self.com.set_source(0)
+        self.com.get_source()
+        self.com.set_matrix(self.__currentState)
+        self.com.get_matrix()
+        self.com.start()
+        self.com.set_led(1,1)
         
     def end_connection(self):
-        self.__com.close()
-        self.connected = False
+        self.com.stop()
+        self.com.close()
+        del self.com
+        self.__connected = False
+        
         
     def check_connection(self):
         return self.__connected
     
     def send_toBoard(self):
-        self.__com.set_matrix(self.__currentState)
-        self.__com.refresh()
+        self.com.set_matrix(self.__currentState)
+        self.com.get_matrix()
+        self.com.refresh()
         
-
-
-
-
-
-
 
     def __refresh_chip(self):
         """ creates the frames and to get from current state to desired state """
