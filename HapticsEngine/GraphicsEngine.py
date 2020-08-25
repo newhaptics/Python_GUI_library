@@ -9,6 +9,7 @@ Created on Fri Aug  7 10:18:00 2020
 
 import numpy as np
 import cairo as ca
+import time
 import math
 
 class GraphicsEngine:
@@ -212,7 +213,9 @@ class GraphicsEngine:
                     break
             else:
                 self.__ct.show_text(letter)
-                if x + 2 < dimX:
+                if (letter.isupper() or letter.isdigit()) and x + 4 < dimX:
+                    x = x + 4
+                elif x + 2 < dimX:
                     x = x + 2
                 elif y + 3 < dimY:
                     y = y + 3
@@ -247,9 +250,7 @@ class GraphicsEngine:
 # data = data.tolist()
 # ge = GraphicsEngine(data)
 # ge.set_output(1)
-# =============================================================================
-# =============================================================================
-# for word in ["hello", "world", "this", "is", "derek"]:
+# for word in ["Hello", "World", "th1s", "!s", "deRek"]:
 #     ge.set_output(1)
 #     ge.write_braille((2,14), word)
 #     time.sleep(1)
