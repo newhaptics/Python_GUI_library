@@ -54,6 +54,10 @@ class HapticsEngine:
         """ sets the protocol for refreshing the chip and generating the refresh states """
         self.__refreshInfo['refresh protocol'] = protocol
 
+    def quick_refresh(self):
+        """ is a quick refresh protocol for controling the board and not the visualizer """
+        self.__currentState = self.__desiredState
+
     def generate_refreshStates(self):
         """ creates the minimum number of frames to get from current state to desired state
         returns the time it takes to get from current state to desired state """

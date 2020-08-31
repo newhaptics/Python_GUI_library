@@ -42,6 +42,7 @@ engine = he.HapticsEngine(tpw,th,ts, 15, 14, 'row by row')
 #engine.set_desiredState(state)
 full = 0
 width = 1
+direct = 0
 times = 0
 
 
@@ -65,63 +66,102 @@ def fill(onOff):
     else:
         full = 0
 
+def direct(onOff):
+    global direct
+    if onOff == "on":
+        direct = 1
+    else:
+        direct = 0
+
 def stroke(size):
     global width
     width = size
+    
 
 def dot(coord):
     engine.ge.select_element(coord)
     print("desired state \n")
     display_matrix(engine.get_desiredState(), 0)
+    if engine.check_connection and direct:
+        engine.quick_refresh()
+        engine.send_toBoard()
 
 def line(start, end):
     engine.ge.make_line(start, end, width)
     print("desired state \n")
     display_matrix(engine.get_desiredState(), 0)
+    if engine.check_connection and direct:
+        engine.quick_refresh()
+        engine.send_toBoard()
 
 def curve(start, control1, control2, end):
     engine.ge.make_bezierCurve(start, control1, control2, end, width)
     print("desired state \n")
     display_matrix(engine.get_desiredState(), 0)
+    if engine.check_connection and direct:
+        engine.quick_refresh()
+        engine.send_toBoard()
 
 def circle(center, radius):
     engine.ge.make_circle(center, radius, width, full)
     print("desired state \n")
     display_matrix(engine.get_desiredState(), 0)
+    if engine.check_connection and direct:
+        engine.quick_refresh()
+        engine.send_toBoard()
 
 def rect(corner1, corner2):
     engine.ge.make_rectangle(corner1, corner2, width)
     print("desired state \n")
     display_matrix(engine.get_desiredState(), 0)
+    if engine.check_connection and direct:
+        engine.quick_refresh()
+        engine.send_toBoard()
 
 def triangle(point1, point2, point3):
     engine.ge.make_polygon(point1, [point2, point3], width, full)
     print("desired state \n")
     display_matrix(engine.get_desiredState(), 0)
+    if engine.check_connection and direct:
+        engine.quick_refresh()
+        engine.send_toBoard()
 
 def polygon(points):
     engine.ge.make_polygon(points[0], points[1:-1], width, full)
     print("desired state \n")
     display_matrix(engine.get_desiredState(), 0)
+    if engine.check_connection and direct:
+        engine.quick_refresh()
+        engine.send_toBoard()
     
 def braille(point, text):
     engine.ge.write_braille(point, text)
     print("desired state \n")
     display_matrix(engine.get_desiredState(), 0)
+    if engine.check_connection and direct:
+        engine.quick_refresh()
+        engine.send_toBoard()
     
 def latin(point, text, font, size):
     engine.ge.write_latin(point, text, font, size)
     print("desired state \n")
     display_matrix(engine.get_desiredState(), 0)
+    if engine.check_connection and direct:
+        engine.quick_refresh()
+        engine.send_toBoard()
     
 def clear():
     engine.ge.clear()
     print("desired state \n")
     display_matrix(engine.get_desiredState(), 0)
+    if engine.check_connection and direct:
+        engine.quick_refresh()
+        engine.send_toBoard()
 
 def state():
     print("desired state \n")
     display_matrix(engine.get_currentState(), 0)
+    
     
 def desired():
     print("desired state \n")
@@ -149,11 +189,10 @@ def setMat(mat):
     engine.set_desiredState(mat)
     
 def quickRefresh():
+    engine.quick_refresh()
     if engine.check_connection:
-        engine.com.set_matrix(engine.get_desiredState)
-        engine.com.get_matrix()
-        engine.com.refresh()
-    
+        engine.send_toBoard()
+         
 def times(now):
     engine.set_stateTime(now)
     display_matrix(engine.get_currentState(), now)
@@ -193,6 +232,7 @@ if __name__ == '__main__':
     console.push_local_ns('erase', erase)
     console.push_local_ns('fill', fill)
     console.push_local_ns('stroke', stroke)
+    console.push_local_ns('direct', direct)
     console.push_local_ns('dot', dot)
     console.push_local_ns('line', line)
     console.push_local_ns('curve', curve)
