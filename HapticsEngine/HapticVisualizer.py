@@ -15,15 +15,31 @@ import pyqtconsole.highlighter as hl
 
 
 #timing matrices
-ts = [[1000 for i in range(0,20)] for j in range(0,20)]
+ts = [[500 for i in range(0,20)] for j in range(0,20)]
 
-th = [[2000 for i in range(0,20)] for j in range(0,20)]
+th = [[1000 for i in range(0,20)] for j in range(0,20)]
 
-tpw = [[1000 for i in range(0,20)] for j in range(0,20)]
+tpw = [[500 for i in range(0,20)] for j in range(0,20)]
+
+state = [[1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, ],
+         [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, ],
+         [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, ],
+         [0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, ],
+         [1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, ],
+         [0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, ],
+         [0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, ],
+         [0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0, ],
+         [1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 0, ],
+         [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ],
+         [0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, ],
+         [0, 0, 0, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 0, 0, ],
+         [0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ],]
 
 
 #create the backend haptics engine
 engine = he.HapticsEngine(tpw,th,ts, 15, 14, 'row by row')
+#engine.set_desiredState(state)
 full = 0
 width = 1
 times = 0
@@ -106,8 +122,14 @@ def clear():
 def state():
     print("desired state \n")
     display_matrix(engine.get_currentState(), 0)
+    
+def desired():
+    print("desired state \n")
+    display_matrix(engine.get_desiredState(), 0)
 
 def refresh():
+    if engine.check_connection():
+        engine.send_toBoard()
     global times
     times = engine.generate_refreshStates()
     clock2 = time.perf_counter()
@@ -122,6 +144,15 @@ def refresh():
     print(clock2)
     if engine.check_connection():
         engine.send_toBoard()
+    
+def setMat(mat):
+    engine.set_desiredState(mat)
+    
+def quickRefresh():
+    if engine.check_connection:
+        engine.com.set_matrix(engine.get_desiredState)
+        engine.com.get_matrix()
+        engine.com.refresh()
     
 def times(now):
     engine.set_stateTime(now)
@@ -173,7 +204,10 @@ if __name__ == '__main__':
     console.push_local_ns('braille', braille)
     console.push_local_ns('clear', clear)
     console.push_local_ns('state', state)
+    console.push_local_ns('desired', desired)
     console.push_local_ns('refresh', refresh)
+    console.push_local_ns('setMat', setMat)
+    console.push_local_ns('quickRefresh', quickRefresh)
     console.push_local_ns('times', times)
     console.push_local_ns('frames', frames)
     console.push_local_ns('connect', connect)

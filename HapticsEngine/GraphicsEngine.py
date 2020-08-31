@@ -206,19 +206,19 @@ class GraphicsEngine:
         dimY = dim[1]
         for letter in brailleString:
             if letter == '\n':
-                if y + 3 < dimY:
+                if y + 4 < dimY:
                     x = 0
-                    y = y + 3
+                    y = y + 4
                 else:
                     break
             else:
                 self.__ct.show_text(letter)
-                if (letter.isupper() or letter.isdigit()) and x + 4 < dimX:
-                    x = x + 4
-                elif x + 2 < dimX:
-                    x = x + 2
-                elif y + 3 < dimY:
-                    y = y + 3
+                if (letter.isupper() or letter.isdigit()) and x + 5 < dimX:
+                    x = x + 5
+                elif x + 3 < dimX:
+                    x = x + 3
+                elif y + 4 < dimY:
+                    y = y + 4
                     x = 0
                 else:
                     break
