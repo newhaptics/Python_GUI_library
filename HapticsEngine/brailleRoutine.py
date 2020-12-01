@@ -10,11 +10,11 @@ import HapticVisualizer as hv
 import time
 
 #timing matrices
-ts = [[500 for i in range(0,20)] for j in range(0,20)]
+ts = [[50 for i in range(0,20)] for j in range(0,20)]
 
-th = [[1000 for i in range(0,20)] for j in range(0,20)]
+th = [[100 for i in range(0,20)] for j in range(0,20)]
 
-tpw = [[500 for i in range(0,20)] for j in range(0,20)]
+tpw = [[50 for i in range(0,20)] for j in range(0,20)]
 
 
 def display_matrix(matrix,number):
@@ -24,8 +24,10 @@ def display_matrix(matrix,number):
                  for row in matrix]))
 
 engine = he.HapticsEngine(tpw, th, ts, 15, 14, 'row by row')
-engine.establish_connection("COM4")
-engine.ge.write_braille((0,4), "hello\nworld\n NH")
+#engine.establish_connection("COM4")
+engine.ge.write_braille((0,0), "TEST")
+#engine.ge.make_circle((7,7), 15, 1, 1)
+#engine.ge.clear()
 
 clock1 = time.perf_counter()
 engine.quick_refresh()
@@ -34,3 +36,4 @@ engine.send_toBoard()
 clock1 = time.perf_counter() - clock1
 
 print(clock1)
+#engine.end_connection()

@@ -21,6 +21,7 @@ class GraphicsEngine:
         dim = newMat.shape
         newDim = (math.ceil(dim[0]/20)*20, math.ceil(dim[1]/20)*20)
         self.__data = np.zeros((newDim[0],newDim[1]), dtype=np.uint8)
+        self.__oldDim = dim
         #copy data from the input matrix to internal data
         self.__data[0:dim[0],0:dim[1]] = newMat
         self.__data[self.__data == 1] = 255
@@ -37,6 +38,7 @@ class GraphicsEngine:
         dim = newMat.shape
         newDim = (math.ceil(dim[0]/20)*20, math.ceil(dim[1]/20)*20)
         self.__data = np.zeros((newDim[0],newDim[1]), dtype=np.uint8)
+        self.__oldDim = dim
         #copy data from the input matrix to internal data
         self.__data[0:dim[0],0:dim[1]] = newMat
         self.__data[self.__data == 1] = 255
@@ -187,7 +189,7 @@ class GraphicsEngine:
         """ takes in starting point for font and string to write
         naturally fills up the screen as you type """
         startX = start[0]
-        startY = start[1]
+        startY = start[1] + 3
         #move to start point
         self.__ct.move_to(startX,startY)
 
@@ -201,7 +203,7 @@ class GraphicsEngine:
         #xy locations of typing the letters and dimensions to know where to stop
         x = startX
         y = startY
-        dim = self.__data.shape
+        dim = self.__oldDim
         dimX = dim[0]
         dimY = dim[1]
         for letter in brailleString:
@@ -215,12 +217,12 @@ class GraphicsEngine:
                 self.__ct.show_text(letter)
                 if (letter.isupper() or letter.isdigit()) and x + 5 < dimX:
                     x = x + 5
-                elif x + 3 < dimX:
+                elif not (letter.isupper() or letter.isdigit()) and x + 3 < dimX:  #if the letter is a lower case make room plus a space
                     x = x + 3
-                elif y + 4 < dimY:
-                    y = y + 4
+                elif y + 4 < dimY: #if the end of the line is reached start a new line
+                    y = y + 3
                     x = 0
-                else:
+                else: #end of the string
                     break
             self.__ct.move_to(x,y)
         self.__save_data()

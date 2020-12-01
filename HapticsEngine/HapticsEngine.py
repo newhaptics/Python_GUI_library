@@ -24,8 +24,8 @@ class HapticsEngine:
         self.__ts = ts
         self.__rows = rows
         self.__columns = columns
-        self.__currentState = [[0 for i in range(0,columns)] for j in range(0,rows)]
-        self.__desiredState = [[0 for i in range(0,columns)] for j in range(0,rows)]
+        self.__currentState = [[False for i in range(0,columns)] for j in range(0,rows)]
+        self.__desiredState = [[False for i in range(0,columns)] for j in range(0,rows)]
         self.ge = gr.GraphicsEngine(self.__desiredState)
         self.__connected = False
         self.__refreshInfo = {'refresh protocol': refreshProtocol}
@@ -37,6 +37,10 @@ class HapticsEngine:
                     element = tpw[rowIndex][columnIndex]
 
         self.__refreshInfo.update({'element refresh timing' : elementTiming})
+        
+    def get_size(self):
+        """ returns a tuple of rows and columns """
+        return (self.__columns, self.__rows)
 
     def get_currentState(self):
         """ returns the current state of the chip """
@@ -56,7 +60,11 @@ class HapticsEngine:
 
     def quick_refresh(self):
         """ is a quick refresh protocol for controling the board and not the visualizer """
-        self.__currentState = self.__desiredState
+        for rowIndex,row in enumerate(self.__desiredState):
+            for elemIndex,elem in enumerate(row):
+                self.__currentState[rowIndex][elemIndex] = copy.deepcopy(elem)
+        
+        #self.__currentState = copy.deepcopy(self.__desiredState)
 
     def generate_refreshStates(self):
         """ creates the minimum number of frames to get from current state to desired state
@@ -81,9 +89,10 @@ class HapticsEngine:
         else:
             self.__refreshInfo['refresh frames'].update({t : self.__get_timeFrame(t)})
             
-    def establish_connection(self, COM):
+    def establish_connection(self, COM, onOff):
         self.com = bc.BoardCom(COM)
         self.__connected = True
+        self.com.echo(onOff)
         self.com.set_size(self.__rows,self.__columns)
         self.com.get_size()
         self.com.set_times(max(max(self.__ts)), max(max(self.__tpw)), max(max(self.__th)))
@@ -99,6 +108,7 @@ class HapticsEngine:
         self.com.set_matrix(self.__currentState)
         self.com.get_matrix()
         self.com.start()
+        self.com.refresh()
         self.com.set_led(1,1)
         
     def end_connection(self):
@@ -112,7 +122,7 @@ class HapticsEngine:
         return self.__connected
     
     def send_toBoard(self):
-        self.com.set_matrix(self.__currentState)
+        self.com.set_matrix(np.fliplr(np.array(self.__currentState)).tolist())
         self.com.get_matrix()
         self.com.refresh()
         

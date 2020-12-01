@@ -10,11 +10,11 @@ import HapticVisualizer as hv
 import time
 
 #timing matrices
-ts = [[500 for i in range(0,20)] for j in range(0,20)]
+ts = [[50 for i in range(0,20)] for j in range(0,20)]
 
-th = [[1000 for i in range(0,20)] for j in range(0,20)]
+th = [[100 for i in range(0,20)] for j in range(0,20)]
 
-tpw = [[500 for i in range(0,20)] for j in range(0,20)]
+tpw = [[50 for i in range(0,20)] for j in range(0,20)]
 
 
 def splitTextToTriplet(string):
@@ -45,7 +45,10 @@ for word in proccessed:
     engine.quick_refresh()
     display_matrix(engine.get_currentState(),0)
     engine.send_toBoard()
-    time.sleep(10)
+    time.sleep(20)
     clock1 = time.perf_counter() - clock1
     engine.ge.clear()
     print(clock1)
+
+
+#engine.end_connection()

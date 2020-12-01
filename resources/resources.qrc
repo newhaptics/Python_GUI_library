@@ -1,0 +1,6 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource>
+    <file alias="emptyPin.svg">hollow_circle.svg</file>
+    <file alias="filledPin.svg">filled_circle.svg</file>
+    </qresource>
+</RCC>

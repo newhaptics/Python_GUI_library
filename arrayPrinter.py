@@ -2,7 +2,7 @@
 """
 Created on Mon Jul 27 12:21:28 2020
 
-@author: NewHaptics01
+@author: Derek Joslin
 """
 
 def splitTextToTriplet(string):
