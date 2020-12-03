@@ -93,23 +93,32 @@ class HapticsEngine:
         self.com = bc.BoardCom(COM)
         self.__connected = True
         self.com.echo(onOff)
-        self.com.set_size(self.__rows,self.__columns)
-        self.com.get_size()
-        self.com.set_times(max(max(self.__ts)), max(max(self.__tpw)), max(max(self.__th)))
-        self.com.get_times()
-        self.com.set_row(self.__columns + 2,1)
-        self.com.get_row()
-        self.com.set_col(2, 1)
-        self.com.get_col()
-        self.com.set_trig(1)
-        self.com.get_trig()
-        self.com.set_source(0)
-        self.com.get_source()
-        self.com.set_matrix(self.__currentState)
-        self.com.get_matrix()
-        self.com.start()
-        self.com.refresh()
-        self.com.set_led(1,1)
+        self.com.turn_on()
+        self.com.ARDclear_all()
+        self.com.ARDset_matrix(self.__currentState)
+        self.com.ARDget_matrix()        
+        
+        
+# =============================================================================
+#   This is when using the embedded control board not arduino
+#         self.com.set_size(self.__rows,self.__columns)
+#         self.com.get_size()
+#         self.com.set_times(max(max(self.__ts)), max(max(self.__tpw)), max(max(self.__th)))
+#         self.com.get_times()
+#         self.com.set_row(self.__columns + 2,1)
+#         self.com.get_row()
+#         self.com.set_col(2, 1)
+#         self.com.get_col()
+#         self.com.set_trig(1)
+#         self.com.get_trig()
+#         self.com.set_source(0)
+#         self.com.get_source()
+#         self.com.set_matrix(self.__currentState)
+#         self.com.get_matrix()
+#         self.com.start()
+#         self.com.refresh()
+#         self.com.set_led(1,1)
+# =============================================================================
         
     def end_connection(self):
         self.com.stop()
@@ -122,9 +131,16 @@ class HapticsEngine:
         return self.__connected
     
     def send_toBoard(self):
-        self.com.set_matrix(np.fliplr(np.array(self.__currentState)).tolist())
-        self.com.get_matrix()
-        self.com.refresh()
+        self.com.ARDset_matrix(np.fliplr(np.array(self.__currentState)).tolist())
+        self.com.ARDget_matrix()
+        
+        
+# =============================================================================
+#Old embedded send to board code       
+#         self.com.set_matrix(np.fliplr(np.array(self.__currentState)).tolist())
+#         self.com.get_matrix()
+#         self.com.refresh()
+# =============================================================================
         
 
     def __refresh_chip(self):

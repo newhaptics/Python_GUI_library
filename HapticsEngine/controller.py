@@ -286,7 +286,7 @@ class vizWindow(qw.QMainWindow):
         self.curve = qw.QAction(filledIcon, "Curve", self)
         self.curve.triggered.connect(lambda: self.__toolSelected("curve","({coord4},{coord3},{coord2},{coord1})"))
         self.circle = qw.QAction(emptyIcon, "Circle", self)
-        self.circle.triggered.connect(lambda: self.__toolSelected("circle","({coord1},{value1})"))
+        self.circle.triggered.connect(lambda: self.__toolSelected("circle","({coord1},{font size})"))
         self.rect = qw.QAction(emptyIcon, "Rect", self)
         self.rect.triggered.connect(lambda: self.__toolSelected("rect","({coord2},{coord1})"))
         self.triangle = qw.QAction(emptyIcon, "Triangle", self)
@@ -338,6 +338,7 @@ class vizWindow(qw.QMainWindow):
         coordDict["coord1"] = newCoord
         self.__paramDict.update(coordDict)
 
+
     def __optionUpdated(self, param, value):
         if value == True and not type(value) == int:
             value = '"on"'
@@ -345,6 +346,8 @@ class vizWindow(qw.QMainWindow):
             value = '"off"'
         self.__paramDict[param] = value
         self.centralWidget.setText("<b>{0} is {1}".format(param,value))
+        
+        
         
         #process the command when an option changes
         self.proccessCommand()
@@ -413,7 +416,7 @@ class vizWindow(qw.QMainWindow):
         #create the list of keys
         keyList = parameters.split(",")
         #create the None list
-        noneList = [None for i in range(0,keyList)]
+        noneList = [None for i in range(0,len(keyList))]
         #merge into paramDict using Dictionary comprehension
         self.__paramDict = {keyList[i]: noneList[i] for i in range(len(noneList))}
 
