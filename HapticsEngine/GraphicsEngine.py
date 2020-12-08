@@ -29,7 +29,7 @@ class GraphicsEngine:
         surface = ca.ImageSurface.create_for_data(self.__data, ca.FORMAT_A8, newDim[0], newDim[1])
         self.__ct = ca.Context(surface)
         self.__ct.set_operator(ca.OPERATOR_SOURCE)
-        self.__output = 1
+        self.__output = True
 
     def read_matrix(self, matrix):
         #create the graphics
@@ -58,7 +58,7 @@ class GraphicsEngine:
         if self.__output:
             self.__data[coord[0], coord[1]] = 255
         else:
-            self.__data[coord[0],coord[1]] = 0
+            self.__data[coord[0], coord[1]] = 0
 
         self.state[coord[0]][coord[1]] = self.__output
 
@@ -74,10 +74,10 @@ class GraphicsEngine:
             offset = 0.5
 
         #add .5 to the start and end
-        startX = start[0] + offset
-        startY = start[1] + offset
-        endX = end[0] + offset
-        endY = end[1] + offset
+        startY = start[0] + offset
+        startX = start[1] + offset
+        endY = end[0] + offset
+        endX = end[1] + offset
         self.__ct.move_to(startX,startY)
         self.__ct.line_to(endX,endY)
         self.__ct.set_line_width(width)
@@ -89,12 +89,12 @@ class GraphicsEngine:
     def make_bezierCurve(self, start, c1, c2, end, width):
         """ takes in a start point and end point as well as two curve points
         it produces a line that bends to all the points """
-        startX = start[0]
-        startY = start[1]
-        endX = end[0]
-        endY = end[1]
+        startY = start[0]
+        startX = start[1]
+        endY = end[0]
+        endX = end[1]
         self.__ct.move_to(startX,startY)
-        self.__ct.curve_to(c1[0], c1[1], c2[0], c2[1], endX, endY)
+        self.__ct.curve_to(c1[1], c1[0], c2[1], c2[0], endX, endY)
         self.__ct.set_line_width(width)
         self.__ct.set_source_rgba(self.__output, self.__output, self.__output, self.__output)
         self.__ct.stroke()
@@ -102,7 +102,7 @@ class GraphicsEngine:
 
     def make_circle(self, center, radius, width, fill):
         """ take in a center and radius and fill or stroke depending on selection"""
-        self.__ct.arc(center[0], center[1], radius, 0, 2*math.pi)
+        self.__ct.arc(center[1], center[0], radius, 0, 2*math.pi)
         self.__ct.set_line_width(width)
         self.__ct.set_source_rgba(self.__output, self.__output, self.__output, self.__output)
         if fill:
@@ -121,12 +121,12 @@ class GraphicsEngine:
         else:
             offset = 0.5
 
-        startX = start[0] + offset
-        startY = start[1] + offset
+        startY = start[0] + offset
+        startX = start[1] + offset
 
         self.__ct.move_to(startX,startY)
         for point in points:
-            self.__ct.line_to(point[0] + offset, point[1] + offset)
+            self.__ct.line_to(point[1] + offset, point[0] + offset)
         self.__ct.line_to(startX, startY)
         self.__ct.set_line_width(width)
         self.__ct.set_source_rgba(self.__output, self.__output, self.__output, self.__output)
@@ -146,10 +146,10 @@ class GraphicsEngine:
         else:
             offset = 0.5
 
-        startX = corner1[0] + offset
-        startY = corner1[1] + offset
-        endX = corner2[0] + offset
-        endY = corner2[1] + offset
+        startY = corner1[0] + offset
+        startX = corner1[1] + offset
+        endY = corner2[0] + offset
+        endX = corner2[1] + offset
         X1 = endX
         Y1 = startY
         X2 = startX
@@ -170,8 +170,8 @@ class GraphicsEngine:
     def write_latin(self, start, displayString, font, size):
         """ takes in starting point for font and string to write
         naturally fills up the screen as you type """
-        startX = start[0]
-        startY = start[1]
+        startY = start[0]
+        startX = start[1]
         #move to start point
         self.__ct.move_to(startX,startY)
 
@@ -188,8 +188,8 @@ class GraphicsEngine:
     def write_braille(self, start, brailleString):
         """ takes in starting point for font and string to write
         naturally fills up the screen as you type """
-        startX = start[0]
-        startY = start[1] + 3
+        startY = start[0]
+        startX = start[1] + 3
         #move to start point
         self.__ct.move_to(startX,startY)
 

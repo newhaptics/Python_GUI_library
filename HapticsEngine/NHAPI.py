@@ -59,10 +59,10 @@ def display_matrix(matrix,number):
 
 def erase(onOff):
     if onOff == "on":
-        engine.ge.set_output(0)
+        engine.ge.set_output(False)
         print("erase on")
     else:
-        engine.ge.set_output(1)
+        engine.ge.set_output(True)
         print("erase off")
         
 def fill(onOff):

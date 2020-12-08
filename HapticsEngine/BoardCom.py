@@ -108,7 +108,7 @@ class BoardCom:
         #write each matrix row
         s = ''
         for row in mat:
-            row = list(map(int, row))
+            row = list(map(int, row)) #converts true/false to one zero
             a = ''.join(map(str, row))
             w = math.ceil(len(row)/4)
             pad = w*4 - len(row)
@@ -192,10 +192,11 @@ class BoardCom:
         output.append(rowIndex)
         
         #take list of rowData and add it to the list, but concatenated with 8 elements as a byte
+        row = list(map(int, rowData))
         fill = 0
         N = 8
-        tempList = rowData + [fill] * N
-        subList = [tempList[n:n+N] for n in range(0, len(rowData), N)]
+        tempList = row + [fill] * N
+        subList = [tempList[n:n+N] for n in range(0, len(row), N)]
         
         for lst in subList:
             s = '0b' + ''.join(map(str, lst))
@@ -297,8 +298,9 @@ class BoardCom:
         fill = 0
         N = 8
         for rowData in mat:
-            tempList = rowData + [fill] * N
-            subList = [tempList[n:n+N] for n in range(0, len(rowData), N)]
+            row = list(map(int, rowData))[::-1]
+            tempList = row + [fill] * N
+            subList = [tempList[n:n+N] for n in range(0, len(row), N)]
             for lst in subList:
                 s = '0b' + ''.join(map(str, lst))
                 output.append(int(s, base=2))

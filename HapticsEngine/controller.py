@@ -97,8 +97,8 @@ class stateMat(qc.QAbstractTableModel):
         self.__state = state
         newMat = np.array(state)
         dim = newMat.shape
-        self.__columns = dim[0]
-        self.__rows = dim[1]
+        self.__columns = dim[1]
+        self.__rows = dim[0]
         
 
     
@@ -113,7 +113,7 @@ class stateMat(qc.QAbstractTableModel):
         take in a list and parse the data inside the list and
         store inside the model container
         """
-        return self.__state[index.column()][index.row()]
+        return self.__state[index.row()][index.column()]
    
 # =============================================================================
 #     def setData(self, index, value, role):
@@ -153,7 +153,7 @@ class vizWindow(qw.QMainWindow):
         
         #console creation
         self.console = guiConsole()
-        self.console.setMaximumWidth(600)
+        self.console.setMaximumWidth(1000)
         self.console.interpreter.exec_signal.connect(lambda: self.__updateDocks())
     
         #create state views
@@ -187,9 +187,15 @@ class vizWindow(qw.QMainWindow):
         self.__createToolBars()
         self.__connectControls()
         
+        #resize the state views
+        self.desiredView.resizeColumnsToContents()
+        self.currentView.resizeColumnsToContents()
+        self.desiredView.resizeRowsToContents()
+        self.currentView.resizeRowsToContents()
+        
         
     def __connectControls(self):
-        self.desiredView.clicked.connect(lambda index = self.desiredView.currentIndex: self.__coordSelector((index.column(),index.row())))
+        self.desiredView.clicked.connect(lambda index = self.desiredView.currentIndex: self.__coordSelector((index.row(),index.column())))
         
     def __createMenuBar(self):
         menuBar = qw.QMenuBar(self)
@@ -269,6 +275,20 @@ class vizWindow(qw.QMainWindow):
           #create the icons for the tools
         filledIcon = qg.QIcon(":filledPin.svg")
         emptyIcon = qg.QIcon(":emptyPin.svg")
+        fillIcon
+        strokeIcon
+        eraseIcon
+        dotIcon
+        lineIcon
+        curveIcon
+        circleIcon
+        RectIcon
+        TriangleIcon
+        PolygonIcon
+        BrailleIcon
+        LatinIcon
+        
+        
         
         #cursor tools
         self.erase = qw.QAction(filledIcon, "Erase", self)
