@@ -1,0 +1,483 @@
+8x8 LED Matrix Test
+0->1latchPin22
+0->1latchPin24
+0->1latchPin26
+0->1latchPin28
+0->1latchPin30
+0->1latchPin32
+0->1latchPin34
+0->1latchPin36
+-----------------
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+-----------------
+0->1dataPin23
+0->1dataPin25
+0->1dataPin27
+0->1dataPin29
+0->1dataPin31
+0->1dataPin33
+0->1dataPin35
+0->1dataPin37
+1->0latchPin36
+state 0| latchEdge 27705| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 1| dataSteady_time 258| s 257| h 1| pw 1
+state 0| latchEdge 27705| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 6| dataSteady_time 262| s 256| h 7| pw 6
+state 0| latchEdge 27705| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 17| dataSteady_time 273| s 256| h 17| pw 17
+state 0| latchEdge 27705| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 29| dataSteady_time 284| s 255| h 29| pw 29
+state 0| latchEdge 27705| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 40| dataSteady_time 295| s 255| h 40| pw 40
+state 0| latchEdge 27705| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 51| dataSteady_time 306| s 255| h 51| pw 51
+state 0| latchEdge 27705| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 62| dataSteady_time 315| s 253| h 62| pw 62
+state 0| latchEdge 27705| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 73| dataSteady_time 325| s 252| h 73| pw 73
+-----------------
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+1 1 1 1 1 1 1 1
+-----------------
+state 1| latchEdge 27705| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 118| dataSteady_time 375| s 257| h 118| pw 118
+state 1| latchEdge 27705| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 126| dataSteady_time 382| s 256| h 126| pw 126
+state 1| latchEdge 27705| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 137| dataSteady_time 393| s 256| h 137| pw 137
+state 1| latchEdge 27705| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 149| dataSteady_time 404| s 255| h 149| pw 149
+state 1| latchEdge 27705| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 161| dataSteady_time 416| s 255| h 161| pw 161
+state 1| latchEdge 27705| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 172| dataSteady_time 427| s 255| h 172| pw 172
+state 1| latchEdge 27705| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 183| dataSteady_time 436| s 253| h 183| pw 183
+state 1| latchEdge 27705| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 194| dataSteady_time 446| s 252| h 194| pw 194
+state 1| latchEdge 27705| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 229| dataSteady_time 486| s 257| h 229| pw 229
+state 1| latchEdge 27705| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 235| dataSteady_time 491| s 256| h 235| pw 235
+state 1| latchEdge 27705| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 247| dataSteady_time 503| s 256| h 247| pw 247
+state 1| latchEdge 27705| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 258| dataSteady_time 513| s 255| h 258| pw 258
+state 1| latchEdge 27705| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 269| dataSteady_time 524| s 255| h 269| pw 269
+state 1| latchEdge 27705| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 280| dataSteady_time 535| s 255| h 280| pw 280
+state 1| latchEdge 27705| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 292| dataSteady_time 545| s 253| h 292| pw 292
+state 1| latchEdge 27705| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 304| dataSteady_time 556| s 252| h 304| pw 304
+0->1latchPin36
+1->0latchPin34
+state 0| latchEdge 28457| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 2| dataSteady_time 1011| s 1009| h 2| pw 2
+state 0| latchEdge 28457| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 7| dataSteady_time 1015| s 1008| h 7| pw 7
+state 0| latchEdge 28457| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 18| dataSteady_time 1026| s 1008| h 18| pw 18
+state 0| latchEdge 28457| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 29| dataSteady_time 1036| s 1007| h 29| pw 29
+state 0| latchEdge 28457| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 40| dataSteady_time 1047| s 1007| h 40| pw 40
+state 0| latchEdge 28457| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 52| dataSteady_time 1059| s 1007| h 52| pw 52
+state 0| latchEdge 28457| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 63| dataSteady_time 1068| s 1005| h 63| pw 63
+state 0| latchEdge 28457| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 74| dataSteady_time 1078| s 1004| h 74| pw 74
+-----------------
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+-----------------
+state 1| latchEdge 28457| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 119| dataSteady_time 1128| s 1009| h 119| pw 119
+state 1| latchEdge 28457| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 128| dataSteady_time 1136| s 1008| h 128| pw 128
+state 1| latchEdge 28457| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 140| dataSteady_time 1148| s 1008| h 140| pw 140
+state 1| latchEdge 28457| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 151| dataSteady_time 1158| s 1007| h 151| pw 151
+state 1| latchEdge 28457| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 163| dataSteady_time 1170| s 1007| h 163| pw 163
+state 1| latchEdge 28457| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 175| dataSteady_time 1182| s 1007| h 175| pw 175
+state 1| latchEdge 28457| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 186| dataSteady_time 1191| s 1005| h 186| pw 186
+state 1| latchEdge 28457| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 198| dataSteady_time 1202| s 1004| h 198| pw 198
+state 1| latchEdge 28457| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 233| dataSteady_time 1242| s 1009| h 233| pw 233
+state 1| latchEdge 28457| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 239| dataSteady_time 1247| s 1008| h 239| pw 239
+state 1| latchEdge 28457| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 250| dataSteady_time 1258| s 1008| h 250| pw 250
+state 1| latchEdge 28457| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 262| dataSteady_time 1269| s 1007| h 262| pw 262
+state 1| latchEdge 28457| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 274| dataSteady_time 1281| s 1007| h 274| pw 274
+state 1| latchEdge 28457| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 285| dataSteady_time 1292| s 1007| h 285| pw 285
+state 1| latchEdge 28457| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 296| dataSteady_time 1301| s 1005| h 296| pw 296
+state 1| latchEdge 28457| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 308| dataSteady_time 1312| s 1004| h 308| pw 308
+0->1latchPin34
+1->0latchPin32
+state 0| latchEdge 29194| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 1| dataSteady_time 1747| s 1746| h 1| pw 1
+state 0| latchEdge 29194| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 7| dataSteady_time 1752| s 1745| h 7| pw 7
+state 0| latchEdge 29194| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 17| dataSteady_time 1762| s 1745| h 17| pw 17
+state 0| latchEdge 29194| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 29| dataSteady_time 1773| s 1744| h 29| pw 29
+state 0| latchEdge 29194| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 41| dataSteady_time 1785| s 1744| h 41| pw 41
+state 0| latchEdge 29194| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 52| dataSteady_time 1796| s 1744| h 52| pw 52
+state 0| latchEdge 29194| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 63| dataSteady_time 1805| s 1742| h 63| pw 63
+state 0| latchEdge 29194| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 74| dataSteady_time 1815| s 1741| h 74| pw 74
+-----------------
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+-----------------
+state 1| latchEdge 29194| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 120| dataSteady_time 1866| s 1746| h 120| pw 120
+state 1| latchEdge 29194| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 128| dataSteady_time 1873| s 1745| h 128| pw 128
+state 1| latchEdge 29194| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 140| dataSteady_time 1885| s 1745| h 140| pw 140
+state 1| latchEdge 29194| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 151| dataSteady_time 1895| s 1744| h 151| pw 151
+state 1| latchEdge 29194| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 163| dataSteady_time 1907| s 1744| h 163| pw 163
+state 1| latchEdge 29194| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 174| dataSteady_time 1918| s 1744| h 174| pw 174
+state 1| latchEdge 29194| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 186| dataSteady_time 1928| s 1742| h 186| pw 186
+state 1| latchEdge 29194| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 197| dataSteady_time 1938| s 1741| h 197| pw 197
+state 1| latchEdge 29194| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 232| dataSteady_time 1978| s 1746| h 232| pw 232
+state 1| latchEdge 29194| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 238| dataSteady_time 1983| s 1745| h 238| pw 238
+state 1| latchEdge 29194| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 251| dataSteady_time 1996| s 1745| h 251| pw 251
+state 1| latchEdge 29194| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 262| dataSteady_time 2006| s 1744| h 262| pw 262
+state 1| latchEdge 29194| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 273| dataSteady_time 2017| s 1744| h 273| pw 273
+state 1| latchEdge 29194| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 285| dataSteady_time 2029| s 1744| h 285| pw 285
+state 1| latchEdge 29194| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 297| dataSteady_time 2039| s 1742| h 297| pw 297
+state 1| latchEdge 29194| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 308| dataSteady_time 2049| s 1741| h 308| pw 308
+0->1latchPin32
+1->0latchPin30
+state 0| latchEdge 29957| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 1| dataSteady_time 2510| s 2509| h 1| pw 1
+state 0| latchEdge 29957| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 7| dataSteady_time 2515| s 2508| h 7| pw 7
+state 0| latchEdge 29957| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 17| dataSteady_time 2525| s 2508| h 17| pw 17
+state 0| latchEdge 29957| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 29| dataSteady_time 2536| s 2507| h 29| pw 29
+state 0| latchEdge 29957| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 41| dataSteady_time 2548| s 2507| h 41| pw 41
+state 0| latchEdge 29957| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 52| dataSteady_time 2559| s 2507| h 52| pw 52
+state 0| latchEdge 29957| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 63| dataSteady_time 2568| s 2505| h 63| pw 63
+state 0| latchEdge 29957| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 74| dataSteady_time 2578| s 2504| h 74| pw 74
+-----------------
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+-----------------
+state 1| latchEdge 29957| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 119| dataSteady_time 2628| s 2509| h 119| pw 119
+state 1| latchEdge 29957| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 128| dataSteady_time 2636| s 2508| h 128| pw 128
+state 1| latchEdge 29957| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 140| dataSteady_time 2648| s 2508| h 140| pw 140
+state 1| latchEdge 29957| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 151| dataSteady_time 2658| s 2507| h 151| pw 151
+state 1| latchEdge 29957| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 162| dataSteady_time 2669| s 2507| h 162| pw 162
+state 1| latchEdge 29957| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 175| dataSteady_time 2682| s 2507| h 175| pw 175
+state 1| latchEdge 29957| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 186| dataSteady_time 2691| s 2505| h 186| pw 186
+state 1| latchEdge 29957| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 197| dataSteady_time 2701| s 2504| h 197| pw 197
+0->1latchPin30
+1->0latchPin28
+state 0| latchEdge 30706| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 0| dataSteady_time 3258| s 3258| h 0| pw 0
+state 0| latchEdge 30706| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 6| dataSteady_time 3263| s 3257| h 6| pw 6
+state 0| latchEdge 30706| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 18| dataSteady_time 3275| s 3257| h 18| pw 18
+state 0| latchEdge 30706| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 29| dataSteady_time 3285| s 3256| h 29| pw 29
+state 0| latchEdge 30706| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 40| dataSteady_time 3296| s 3256| h 40| pw 40
+state 0| latchEdge 30706| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 51| dataSteady_time 3307| s 3256| h 51| pw 51
+state 0| latchEdge 30706| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 63| dataSteady_time 3317| s 3254| h 63| pw 63
+state 0| latchEdge 30706| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 74| dataSteady_time 3327| s 3253| h 74| pw 74
+-----------------
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+-----------------
+state 0| latchEdge 30706| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 119| dataSteady_time 3377| s 3258| h 119| pw 119
+state 1| latchEdge 30706| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 128| dataSteady_time 3385| s 3257| h 128| pw 128
+state 1| latchEdge 30706| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 139| dataSteady_time 3396| s 3257| h 139| pw 139
+state 1| latchEdge 30706| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 152| dataSteady_time 3408| s 3256| h 152| pw 152
+state 1| latchEdge 30706| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 163| dataSteady_time 3419| s 3256| h 163| pw 163
+state 1| latchEdge 30706| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 174| dataSteady_time 3430| s 3256| h 174| pw 174
+state 1| latchEdge 30706| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 187| dataSteady_time 3441| s 3254| h 187| pw 187
+state 1| latchEdge 30706| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 198| dataSteady_time 3451| s 3253| h 198| pw 198
+0->1latchPin28
+1->0latchPin26
+state 0| latchEdge 31435| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 0| dataSteady_time 3987| s 3987| h 0| pw 0
+state 0| latchEdge 31435| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 6| dataSteady_time 3992| s 3986| h 6| pw 6
+state 0| latchEdge 31435| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 18| dataSteady_time 4004| s 3986| h 18| pw 18
+state 0| latchEdge 31435| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 29| dataSteady_time 4014| s 3985| h 29| pw 29
+state 0| latchEdge 31435| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 40| dataSteady_time 4025| s 3985| h 40| pw 40
+state 0| latchEdge 31435| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 51| dataSteady_time 4036| s 3985| h 51| pw 51
+state 0| latchEdge 31435| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 63| dataSteady_time 4046| s 3983| h 63| pw 63
+state 0| latchEdge 31435| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 74| dataSteady_time 4056| s 3982| h 74| pw 74
+-----------------
+0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0
+0 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+-----------------
+state 0| latchEdge 31435| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 120| dataSteady_time 4107| s 3987| h 120| pw 120
+state 1| latchEdge 31435| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 128| dataSteady_time 4114| s 3986| h 128| pw 128
+state 1| latchEdge 31435| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 141| dataSteady_time 4127| s 3986| h 141| pw 141
+state 1| latchEdge 31435| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 152| dataSteady_time 4137| s 3985| h 152| pw 152
+state 1| latchEdge 31435| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 163| dataSteady_time 4148| s 3985| h 163| pw 163
+state 1| latchEdge 31435| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 174| dataSteady_time 4159| s 3985| h 174| pw 174
+state 1| latchEdge 31435| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 187| dataSteady_time 4170| s 3983| h 187| pw 187
+state 1| latchEdge 31435| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 198| dataSteady_time 4180| s 3982| h 198| pw 198
+state 1| latchEdge 31435| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 234| dataSteady_time 4221| s 3987| h 234| pw 234
+state 1| latchEdge 31435| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 240| dataSteady_time 4226| s 3986| h 240| pw 240
+state 1| latchEdge 31435| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 251| dataSteady_time 4237| s 3986| h 251| pw 251
+state 1| latchEdge 31435| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 262| dataSteady_time 4247| s 3985| h 262| pw 262
+state 1| latchEdge 31435| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 275| dataSteady_time 4260| s 3985| h 275| pw 275
+state 1| latchEdge 31435| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 286| dataSteady_time 4271| s 3985| h 286| pw 286
+state 1| latchEdge 31435| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 297| dataSteady_time 4280| s 3983| h 297| pw 297
+state 1| latchEdge 31435| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 310| dataSteady_time 4292| s 3982| h 310| pw 310
+0->1latchPin26
+1->0latchPin24
+state 0| latchEdge 32184| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 0| dataSteady_time 4736| s 4736| h 0| pw 0
+state 0| latchEdge 32184| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 6| dataSteady_time 4741| s 4735| h 6| pw 6
+state 0| latchEdge 32184| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 17| dataSteady_time 4752| s 4735| h 17| pw 17
+state 0| latchEdge 32184| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 28| dataSteady_time 4762| s 4734| h 28| pw 28
+state 0| latchEdge 32184| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 40| dataSteady_time 4774| s 4734| h 40| pw 40
+state 0| latchEdge 32184| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 51| dataSteady_time 4785| s 4734| h 51| pw 51
+state 0| latchEdge 32184| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 62| dataSteady_time 4794| s 4732| h 62| pw 62
+state 0| latchEdge 32184| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 74| dataSteady_time 4805| s 4731| h 74| pw 74
+-----------------
+0 0 0 0 0 0 0 0
+0 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+-----------------
+state 0| latchEdge 32184| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 120| dataSteady_time 4856| s 4736| h 120| pw 120
+state 1| latchEdge 32184| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 129| dataSteady_time 4864| s 4735| h 129| pw 129
+state 1| latchEdge 32184| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 140| dataSteady_time 4875| s 4735| h 140| pw 140
+state 1| latchEdge 32184| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 151| dataSteady_time 4885| s 4734| h 151| pw 151
+state 1| latchEdge 32184| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 164| dataSteady_time 4898| s 4734| h 164| pw 164
+state 1| latchEdge 32184| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 175| dataSteady_time 4909| s 4734| h 175| pw 175
+state 1| latchEdge 32184| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 186| dataSteady_time 4918| s 4732| h 186| pw 186
+state 1| latchEdge 32184| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 197| dataSteady_time 4928| s 4731| h 197| pw 197
+state 1| latchEdge 32184| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 233| dataSteady_time 4969| s 4736| h 233| pw 233
+state 1| latchEdge 32184| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 239| dataSteady_time 4974| s 4735| h 239| pw 239
+state 1| latchEdge 32184| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 252| dataSteady_time 4987| s 4735| h 252| pw 252
+state 1| latchEdge 32184| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 263| dataSteady_time 4997| s 4734| h 263| pw 263
+state 1| latchEdge 32184| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 274| dataSteady_time 5008| s 4734| h 274| pw 274
+state 1| latchEdge 32184| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 287| dataSteady_time 5021| s 4734| h 287| pw 287
+state 1| latchEdge 32184| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 298| dataSteady_time 5030| s 4732| h 298| pw 298
+state 1| latchEdge 32184| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 309| dataSteady_time 5040| s 4731| h 309| pw 309
+0->1latchPin24
+1->0latchPin22
+state 0| latchEdge -32601| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 0| dataSteady_time 5487| s 5487| h 0| pw 0
+state 0| latchEdge -32601| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 8| dataSteady_time 5494| s 5486| h 8| pw 8
+state 0| latchEdge -32601| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 18| dataSteady_time 5504| s 5486| h 18| pw 18
+state 0| latchEdge -32601| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 30| dataSteady_time 5515| s 5485| h 30| pw 30
+state 0| latchEdge -32601| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 41| dataSteady_time 5526| s 5485| h 41| pw 41
+state 0| latchEdge -32601| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 53| dataSteady_time 5538| s 5485| h 53| pw 53
+state 0| latchEdge -32601| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 64| dataSteady_time 5547| s 5483| h 64| pw 64
+state 0| latchEdge -32601| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 75| dataSteady_time 5557| s 5482| h 75| pw 75
+-----------------
+0 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1
+-----------------
+state 0| latchEdge -32601| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 121| dataSteady_time 5608| s 5487| h 121| pw 121
+state 1| latchEdge -32601| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 130| dataSteady_time 5616| s 5486| h 130| pw 130
+state 1| latchEdge -32601| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 142| dataSteady_time 5628| s 5486| h 142| pw 142
+state 1| latchEdge -32601| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 154| dataSteady_time 5639| s 5485| h 154| pw 154
+state 1| latchEdge -32601| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 165| dataSteady_time 5650| s 5485| h 165| pw 165
+state 1| latchEdge -32601| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 177| dataSteady_time 5662| s 5485| h 177| pw 177
+state 1| latchEdge -32601| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 189| dataSteady_time 5672| s 5483| h 189| pw 189
+state 1| latchEdge -32601| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 200| dataSteady_time 5682| s 5482| h 200| pw 200
+state 1| latchEdge -32601| dataEdge 27448| dataState 1| latchState 0
+latchSteady_time 236| dataSteady_time 5723| s 5487| h 236| pw 236
+state 1| latchEdge -32601| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 242| dataSteady_time 5728| s 5486| h 242| pw 242
+state 1| latchEdge -32601| dataEdge 27449| dataState 1| latchState 0
+latchSteady_time 254| dataSteady_time 5740| s 5486| h 254| pw 254
+state 1| latchEdge -32601| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 266| dataSteady_time 5751| s 5485| h 266| pw 266
+state 1| latchEdge -32601| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 277| dataSteady_time 5762| s 5485| h 277| pw 277
+state 1| latchEdge -32601| dataEdge 27450| dataState 1| latchState 0
+latchSteady_time 289| dataSteady_time 5774| s 5485| h 289| pw 289
+state 1| latchEdge -32601| dataEdge 27452| dataState 1| latchState 0
+latchSteady_time 300| dataSteady_time 5783| s 5483| h 300| pw 300
+state 1| latchEdge -32601| dataEdge 27453| dataState 1| latchState 0
+latchSteady_time 313| dataSteady_time 5795| s 5482| h 313| pw 313
+0->1latchPin22
+1->0dataPin23
+1->0dataPin25
+1->0dataPin27
+1->0dataPin29
+1->0dataPin31
+1->0dataPin33
+1->0dataPin35
+1->0dataPin37
