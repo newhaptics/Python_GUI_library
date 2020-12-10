@@ -497,7 +497,7 @@ class vizWindow(qw.QMainWindow):
                 self.__coordUpdater(index)
             
             self.centralWidget.setText("<b>coordinate is ({0},{1})".format(index[0],index[1]))
-            self.processCommand
+            self.processCommand()
         
         else:
             self.centralWidget.setText("<b>coordinate is ({0},{1})".format(index[0],index[1]))
