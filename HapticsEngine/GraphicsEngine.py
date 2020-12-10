@@ -188,8 +188,8 @@ class GraphicsEngine:
     def write_braille(self, start, brailleString):
         """ takes in starting point for font and string to write
         naturally fills up the screen as you type """
-        startY = start[0]
-        startX = start[1] + 3
+        startY = start[0] + 3
+        startX = start[1]
         #move to start point
         self.__ct.move_to(startX,startY)
 

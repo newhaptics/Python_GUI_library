@@ -55,7 +55,7 @@ def display_matrix(matrix,number):
     print('\n'.join([' '.join(['{:4}'.format(item) for item in row])
                      for row in matrix]))
     print('---------------------------\n')
-    
+
 
 def erase(onOff):
     if onOff == "on":
@@ -64,7 +64,7 @@ def erase(onOff):
     else:
         engine.ge.set_output(True)
         print("erase off")
-        
+
 def fill(onOff):
         global full
         if onOff == "on":
@@ -73,7 +73,7 @@ def fill(onOff):
         else:
             full = 0
             print("fill off")
-        
+
 def direct(onOff):
     global update
     if onOff == "on":
@@ -87,7 +87,7 @@ def stroke(size):
     global width
     print("stroke is {0}".format(size))
     width = size
-    
+
 def settings():
     global full
     global width
@@ -96,7 +96,7 @@ def settings():
     print("stroke setting {0}".format(width))
     print("direct setting {0}".format(update))
     print("connection setting {0}".format(engine.check_connection()))
-    
+
 
 def dot(coord):
     engine.ge.select_element(coord)
@@ -109,13 +109,13 @@ def line(start, end):
     print("desired state \n")
     display_matrix(engine.get_desiredState(), 0)
     boardControl()
-    
+
 def curve(start, control1, control2, end):
     engine.ge.make_bezierCurve(start, control1, control2, end, width)
     print("desired state \n")
     display_matrix(engine.get_desiredState(), 0)
     boardControl()
-    
+
 def circle(center, radius):
     engine.ge.make_circle(center, radius, width, full)
     print("desired state \n")
@@ -139,19 +139,19 @@ def polygon(points):
     print("desired state \n")
     display_matrix(engine.get_desiredState(), 0)
     boardControl()
-    
+
 def braille(point, text):
     engine.ge.write_braille(point, text)
     print("desired state \n")
     display_matrix(engine.get_desiredState(), 0)
     boardControl()
-    
+
 def latin(point, text, font, size):
     engine.ge.write_latin(point, text, font, size)
     print("desired state \n")
     display_matrix(engine.get_desiredState(), 0)
     boardControl()
-    
+
 def clear():
     engine.ge.clear()
     print("desired state \n")
@@ -161,7 +161,7 @@ def clear():
 def state():
     print("current state \n")
     display_matrix(engine.get_currentState(), 0)
-    
+
 def desired():
     print("desired state \n")
     display_matrix(engine.get_desiredState(), 0)
@@ -182,15 +182,15 @@ def refresh():
     print(clock2)
     if engine.check_connection():
         engine.send_toBoard()
-    
+
 def setMat(mat):
     engine.set_desiredState(mat)
-    
+
 def quickRefresh():
     engine.quick_refresh()
     if engine.check_connection():
         engine.send_toBoard()
-         
+
 def times(now):
     engine.set_stateTime(now)
     display_matrix(engine.get_currentState(), now)
@@ -198,12 +198,12 @@ def times(now):
 
 def frames():
     print(times)
-   
+
 def connect(COM, *args):
     if len(args) > 0:
         engine.establish_connection(COM, 1)
     else:
         engine.establish_connection(COM, 0)
-    
+
 def disconnect():
     engine.end_connection()
