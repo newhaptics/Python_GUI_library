@@ -134,7 +134,7 @@ class stateMat(qc.QAbstractTableModel):
 #         
 #     def removeColumns():
 # =============================================================================
-        
+
 
 
 
@@ -144,17 +144,71 @@ class vizWindow(qw.QMainWindow):
     
     def __init__(self, parent = None):
         super().__init__(parent)
+        FCIcon = qg.QIcon(":main_symbol")
+        HELogo = qg.QPixmap(":HE_logo")
+        HELogo = HELogo.scaled(175,175,qc.Qt.KeepAspectRatio)
+        
+# =============================================================================
+#         style guide
+#         rgb(85,216,211) -> light turquoise
+#         rgb(41,178,170) -> dark turquoise
+#         rgb(37,64,143) -> reflex blue
+#         rgb(65,67,77) -> persian nights
+# =============================================================================
+        
+        
+        #create window
         self.setWindowTitle("FC Lab operation functions")
-        self.resize(400, 200)
+        self.setWindowIcon(FCIcon)
+# =============================================================================
+#         self.setStyleSheet(("border: 1px solid rgba(65,67,77, 100%);"
+#                             "font-family : Comfortaa;"
+#                             "color: rgb(255,255,245);"
+#                             "font-size: 13px;"
+#                             "background-color: rgb(85,216,211);"
+#                             "selection-color: rgb(65,67,77);"
+#                             "selection-background-color: rgba(37,64,143, 10%);" ))
+# =============================================================================
+        
+        
+        #create status bar with the status and haptic engine ad
+        self.statusBar = qw.QStatusBar()
+        self.setStatusBar(self.statusBar)
+
+        
+        self.HEad = qw.QLabel()
+        self.HEad.setPixmap(HELogo)
         self.centralWidget = qw.QLabel("Hello World")
-        self.labelDock = qw.QDockWidget("Dialog", self, qc.Qt.Widget)
-        self.labelDock.setWidget(self.centralWidget)
+        self.pwr = qw.QLabel("POWERED BY")
+        self.statusBar.addWidget(self.centralWidget,30)
+        self.statusBar.addWidget(self.pwr)
+        self.statusBar.addWidget(self.HEad)
+        
+# =============================================================================
+#         self.statusBar.setStyleSheet(("border: 1px solid rgba(65,67,77, 100%);"
+#                             "font-family : Comfortaa;"
+#                             "color: rgb(255,255,245);"
+#                             "font-size: 18px;"
+#                             "background-color: rgb(41,178,170);"
+#                             "selection-color: rgb(65,67,77);"
+#                             "selection-background-color: rgba(37,64,143, 10%);" ))
+# =============================================================================
         
         
         #console creation
         self.console = guiConsole()
-        self.console.setMaximumWidth(1000)
+        self.console.setMaximumWidth(900)
         self.console.interpreter.exec_signal.connect(lambda: self.__updateDocks())
+        
+# =============================================================================
+#         self.console.setStyleSheet(("border: 1px solid rgba(65,67,77, 100%);"
+#                             "font-family : Comfortaa;"
+#                             "color: rgb(255,255,245);"
+#                             "font-size: 18px;"
+#                             "background-color: rgb(85,216,211);"
+#                             "selection-color: rgb(65,67,77);"
+#                             "selection-background-color: rgba(37,64,143, 10%);" ))
+# =============================================================================
     
         #create state views
         self.currentView = displayMat(nh.engine.get_currentState())
@@ -164,11 +218,31 @@ class vizWindow(qw.QMainWindow):
         self.desiredDock = qw.QDockWidget("desired state", self, qc.Qt.Widget)
         self.desiredDock.setWidget(self.desiredView)
         
+# =============================================================================
+#         self.currentDock.setStyleSheet(("border: 1px solid rgba(65,67,77, 100%);"
+#                             "font-family : Comfortaa;"
+#                             "color: rgb(255,255,245);"
+#                             "font-size: 18px;"
+#                             "background-color: rgb(41,178,170);"
+#                             "selection-color: rgb(65,67,77);"
+#                             "selection-background-color: rgba(37,64,143, 10%);" ))
+# =============================================================================
+        
+# =============================================================================
+#         self.desiredDock.setStyleSheet(("border: 1px solid rgba(65,67,77, 100%);"
+#                             "font-family : Comfortaa;"
+#                             "color: rgb(255,255,245);"
+#                             "font-size: 18px;"
+#                             "background-color: rgb(41,178,170);"
+#                             "selection-color: rgb(65,67,77);"
+#                             "selection-background-color: rgba(37,64,143, 10%);" ))
+# =============================================================================
+        
         #align widgets
         self.setCentralWidget(self.console)
         self.addDockWidget(qc.Qt.LeftDockWidgetArea, self.desiredDock, qc.Qt.Vertical)
         self.addDockWidget(qc.Qt.LeftDockWidgetArea, self.currentDock, qc.Qt.Vertical)
-        self.addDockWidget(qc.Qt.BottomDockWidgetArea, self.labelDock)
+        #self.addDockWidget(qc.Qt.BottomDockWidgetArea, self.labelDock)
         #self.currentView.setAlignment(qc.Qt.AlignTop | qc.Qt.AlignLeft)
         #self.desiredView.setAlignment(qc.Qt.AlignBottom | qc.Qt.AlignLeft)
         
@@ -194,6 +268,22 @@ class vizWindow(qw.QMainWindow):
         self.currentView.resizeRowsToContents()
         
         
+    def flashSplash(self):
+        FCLogo = qg.QPixmap(":main_logo")
+        FCLogo = FCLogo.scaled(1000,1000)
+        
+        self.splash = qw.QSplashScreen(FCLogo)
+
+        # By default, SplashScreen will be in the center of the screen.
+        # You can move it to a specific location if you want:
+        # self.splash.move(10,10)
+
+        self.splash.show()
+
+        # Close SplashScreen after 2 seconds (2000 ms)
+        qc.QTimer.singleShot(1000, self.splash.close)
+        
+        
     def __connectControls(self):
         self.desiredView.clicked.connect(lambda index = self.desiredView.currentIndex: self.__coordSelector((index.row(),index.column())))
         
@@ -209,15 +299,29 @@ class vizWindow(qw.QMainWindow):
         #edit menu
         editMenu = qw.QMenu("&Edit", self)
         editMenu.addAction(self.clear)
+        editMenu.triggered.connect(lambda: self.executeTool())
         
         #help menu
         helpMenu = qw.QMenu("&Help", self)
+        helpMenu.addAction(self.settings)
+        helpMenu.addAction(self.frames)
+        helpMenu.triggered.connect(lambda: self.executeTool())
         
         #control menu
         controlMenu = qw.QMenu("Control",self)
+        controlMenu.addAction(self.refresh)
+        controlMenu.addAction(self.times)
+        controlMenu.addAction(self.setMat)
+        controlMenu.triggered.connect(lambda: self.executeTool())
+        
         
         #board menu
         boardMenu = qw.QMenu("Board", self)
+        boardMenu.addAction(self.connect)
+        boardMenu.addAction(self.disconnect)
+        boardMenu.addAction(self.quickRefresh)
+        boardMenu.addAction(self.direct)
+        boardMenu.triggered.connect(lambda: self.executeTool())
         
         #add menu bars
         menuBar.addMenu(fileMenu)
@@ -244,6 +348,17 @@ class vizWindow(qw.QMainWindow):
         cursors.addWidget(self.strokeSize)
         cursors.setIconSize(qc.QSize(50,50))
         cursors.setMovable(False)
+        
+# =============================================================================
+#         cursors.setStyleSheet(("border: 1px solid rgba(65,67,77, 100%);"
+#                             "font-family : Comfortaa;"
+#                             "color: rgb(255,255,245);"
+#                             "font-size: 13px;"
+#                             "background-color: rgb(41,178,170);"
+#                             "selection-color: rgb(65,67,77);"
+#                             "selection-background-color: rgba(37,64,143, 10%);" ))
+# =============================================================================
+        
         #shape Bar
         shapes = qw.QToolBar("shapes", self)
         shapes.addAction(self.dot)
@@ -255,6 +370,17 @@ class vizWindow(qw.QMainWindow):
         shapes.addAction(self.polygon)
         shapes.setIconSize(qc.QSize(50,50))
         shapes.setMovable(False)
+        
+# =============================================================================
+#         shapes.setStyleSheet(("border: 1px solid rgba(65,67,77, 100%);"
+#                             "font-family : Comfortaa;"
+#                             "color: rgb(255,255,245);"
+#                             "font-size: 13px;"
+#                             "background-color: rgb(41,178,170);"
+#                             "selection-color: rgb(65,67,77);"
+#                             "selection-background-color: rgba(37,64,143, 10%);" ))
+# =============================================================================
+        
         #character Bar
         characters = qw.QToolBar("characters", self)
         characters.addAction(self.braille)
@@ -266,6 +392,16 @@ class vizWindow(qw.QMainWindow):
         characters.setIconSize(qc.QSize(50,50))
         characters.setMovable(False)
         
+# =============================================================================
+#         characters.setStyleSheet(("border: 1px solid rgba(65,67,77, 100%);"
+#                             "font-family : Comfortaa;"
+#                             "color: rgb(255,255,245);"
+#                             "font-size: 13px;"
+#                             "background-color: rgb(41,178,170);"
+#                             "selection-color: rgb(65,67,77);"
+#                             "selection-background-color: rgba(37,64,143, 10%);" ))
+# =============================================================================
+        
         #add tool bars
         self.addToolBar(qc.Qt.TopToolBarArea, cursors)
         self.addToolBar(qc.Qt.LeftToolBarArea, shapes)
@@ -273,57 +409,77 @@ class vizWindow(qw.QMainWindow):
     
     def __createActions(self):
           #create the icons for the tools
-        filledIcon = qg.QIcon(":filledPin.svg")
-        emptyIcon = qg.QIcon(":emptyPin.svg")
-        fillIcon
-        strokeIcon
-        eraseIcon
-        dotIcon
-        lineIcon
-        curveIcon
-        circleIcon
-        RectIcon
-        TriangleIcon
-        PolygonIcon
-        BrailleIcon
-        LatinIcon
-        
+        filledIcon = qg.QIcon(":filledPin")
+        emptyIcon = qg.QIcon(":emptyPin")
+        fillIcon = qg.QIcon(":fill")
+        strokeIcon = qg.QIcon(":stroke")
+        eraseIcon = qg.QIcon(":erase")
+        dotIcon = qg.QIcon(":dot")
+        lineIcon = qg.QIcon(":line")
+        curveIcon = qg.QIcon(":curve")
+        circleIcon = qg.QIcon(":circle")
+        rectIcon = qg.QIcon(":square")
+        triangleIcon = qg.QIcon(":triangle")
+        polygonIcon = qg.QIcon(":polygon")
+        brailleIcon = qg.QIcon(":braille")
+        latinIcon = qg.QIcon(":text")
         
         
         #cursor tools
-        self.erase = qw.QAction(filledIcon, "Erase", self)
+        self.erase = qw.QAction(eraseIcon, "Erase", self)
         self.erase.triggered.connect(lambda: self.__toolSelected("erase","({on/off})"))
-        self.fill = qw.QAction(filledIcon, "Fill", self)
+        self.fill = qw.QAction(fillIcon, "Fill", self)
         self.fill.triggered.connect(lambda: self.__toolSelected("fill","({on/off})"))
-        self.stroke = qw.QAction(filledIcon, "Stroke", self)
-        self.stroke.triggered.connect(lambda: self.__toolSelected("stroke","({on/off})"))
+        self.stroke = qw.QAction(strokeIcon, "Stroke", self)
+        self.stroke.triggered.connect(lambda: self.__toolSelected("stroke","({stroke size})"))
         
         #shape tools
-        self.dot = qw.QAction(filledIcon, "Dot", self)
+        self.dot = qw.QAction(dotIcon, "Dot", self)
         self.dot.triggered.connect(lambda: self.__toolSelected("dot","({coord1})"))
-        self.line = qw.QAction(filledIcon, "Line", self)
+        self.line = qw.QAction(lineIcon, "Line", self)
         self.line.triggered.connect(lambda: self.__toolSelected("line","({coord2},{coord1})"))
-        self.curve = qw.QAction(filledIcon, "Curve", self)
+        self.curve = qw.QAction(curveIcon, "Curve", self)
         self.curve.triggered.connect(lambda: self.__toolSelected("curve","({coord4},{coord3},{coord2},{coord1})"))
-        self.circle = qw.QAction(emptyIcon, "Circle", self)
+        self.circle = qw.QAction(circleIcon, "Circle", self)
         self.circle.triggered.connect(lambda: self.__toolSelected("circle","({coord1},{font size})"))
-        self.rect = qw.QAction(emptyIcon, "Rect", self)
+        self.rect = qw.QAction(rectIcon, "Rect", self)
         self.rect.triggered.connect(lambda: self.__toolSelected("rect","({coord2},{coord1})"))
-        self.triangle = qw.QAction(emptyIcon, "Triangle", self)
+        self.triangle = qw.QAction(triangleIcon, "Triangle", self)
         self.triangle.triggered.connect(lambda: self.__toolSelected("triangle","({coord3},{coord2},{coord1})"))
-        self.polygon = qw.QAction(emptyIcon, "Polygon", self)
+        self.polygon = qw.QAction(polygonIcon, "Polygon", self)
         self.polygon.triggered.connect(lambda: self.__toolSelected("polygon","({list1})"))
         
         #character tools
-        self.braille = qw.QAction(emptyIcon, "Braille", self)
+        self.braille = qw.QAction(brailleIcon, "Braille", self)
         self.braille.triggered.connect(lambda: self.__toolSelected("braille","({coord1},{text})"))
-        self.latin = qw.QAction(emptyIcon, "Latin", self)
+        self.latin = qw.QAction(latinIcon, "Latin", self)
         self.latin.triggered.connect(lambda: self.__toolSelected("latin","({coord1},{text})"))
         
         #control actions
-        self.clear = qw.QAction(emptyIcon, "Clear", self)
+        self.clear = qw.QAction(eraseIcon, "Clear", self)
         self.clear.triggered.connect(lambda: self.__toolSelected("clear","()"))
+        self.refresh = qw.QAction("Refresh", self)
+        self.refresh.triggered.connect(lambda: self.__toolSelected("refresh","()"))
+        self.times = qw.QAction("Times", self)
+        self.times.triggered.connect(lambda: self.__toolSelected("times","({now})"))
+        self.setMat = qw.QAction("Set Matrix", self)
+        self.setMat.triggered.connect(lambda: self.__toolSelected("setMat","({matrix})"))
         
+        #board actions
+        self.connect = qw.QAction("Connect", self)
+        self.connect.triggered.connect(lambda: self.__toolSelected("connect","({com})"))
+        self.disconnect = qw.QAction("Disconnect", self)
+        self.disconnect.triggered.connect(lambda: self.__toolSelected("disconnect","()"))
+        self.quickRefresh = qw.QAction("Quick Refresh", self)
+        self.quickRefresh.triggered.connect(lambda: self.__toolSelected("quickRefresh","()"))
+        self.direct = qw.QAction("Direct", self)
+        self.direct.triggered.connect(lambda: self.__toolSelected("direct", "()"))
+        
+        #help actions
+        self.settings = qw.QAction("Settings", self)
+        self.settings.triggered.connect(lambda: self.__toolSelected("settings","()"))
+        self.frames = qw.QAction("Frames", self)
+        self.frames.triggered.connect(lambda: self.__toolSelected("frames","()"))
         
     def __coordSelector(self, index):
         
@@ -335,15 +491,13 @@ class vizWindow(qw.QMainWindow):
             #create a list of coordinates up to 50 long
             self.__coordHist.append(index)
             while len(self.__coordHist) > 50:
-                self.__coordList.pop(0)
+                self.__coordHist.pop(0)
             #assign the dynamic parameter coordinates
             else:
                 self.__coordUpdater(index)
             
             self.centralWidget.setText("<b>coordinate is ({0},{1})".format(index[0],index[1]))
         
-            #process the command after every click
-            self.processCommand()
         else:
             self.centralWidget.setText("<b>coordinate is ({0},{1})".format(index[0],index[1]))
             
@@ -370,7 +524,7 @@ class vizWindow(qw.QMainWindow):
         
         
         #process the command when an option changes
-        self.proccessCommand()
+        self.processCommand()
     
     
     def __toolSelected(self, tool, parameters):

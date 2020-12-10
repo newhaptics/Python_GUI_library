@@ -12,6 +12,8 @@ from PyQt5.QtWidgets import QApplication
 
 import controller as cn
 
+import time as t
+
 
 state = [[1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, ],
          [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, ],
@@ -33,6 +35,7 @@ state = [[1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, ],
 if __name__ == '__main__':
     app = QApplication([])
     
+    
     #create primary window view
     window = cn.vizWindow()
 # =============================================================================
@@ -41,11 +44,14 @@ if __name__ == '__main__':
 #     currentView.setModel(currentState)
 #     desiredView.setModel(desiredState)
 # =============================================================================
+
+    window.flashSplash()
+
+    t.sleep(0.5)
+        
+    window.showMaximized()
     
-    
-    window.show()
-    
-    window.console.eval_queued()
+    window.console.eval_in_thread()
 
 
     sys.exit(app.exec_())
